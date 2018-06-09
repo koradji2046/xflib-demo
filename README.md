@@ -26,6 +26,9 @@
 4. 新建 Pull Request
 
 
+#### 我的公众号
+![微信公众号](https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzI2Nzg3NTEwNw==&mid=100000038&idx=1&sn=fbd9c879b7669b667e41e66b0f3799e6&send_time=1528526709)
+
 #### 码云特技
 
 1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
