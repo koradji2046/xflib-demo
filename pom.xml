@@ -35,4 +35,8 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<modules>
+		<module>boot-sequence-demo</module>
+		<module>spring-boot-sample-web-jsp</module>
+	</modules>
 </project>
