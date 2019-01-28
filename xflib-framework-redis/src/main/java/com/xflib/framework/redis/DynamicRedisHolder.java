@@ -1,10 +1,8 @@
 /** Copyright (c) 2019 Koradji. */
 package com.xflib.framework.redis;
 
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import com.xflib.framework.common.BaseException;
 import com.xflib.framework.utils.SpringUtils;
 
 /**
@@ -25,19 +23,14 @@ public class DynamicRedisHolder {
         return (site == null || site.isEmpty()) ? "default" : site;
     }
 
-    public static RedisConnectionFactory getRedisConnectionFactoryContext() {
-        String site = DynamicRedisHolder.getSite();
-        String lookupKey = String.format("redisConnectionFactory-%s", site.isEmpty() ? "default" : site);
-        RedisConnectionFactory result = (SpringUtils.getBean(lookupKey, RedisConnectionFactory.class));
-        if (result == null) {
-            throw new BaseException(String.format("redis.context.notfound.%s", lookupKey));
-        }
-        return result;
-    }
-
     @SuppressWarnings("unchecked")
     public static RedisTemplate<String, Object> getRedisTemplate(String site) {
         DynamicRedisHolder.setSite(site);
+        return SpringUtils.getBean("redisTemplate", RedisTemplate.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static RedisTemplate<String, Object> getRedisTemplate() {
         return SpringUtils.getBean("redisTemplate", RedisTemplate.class);
     }
 }

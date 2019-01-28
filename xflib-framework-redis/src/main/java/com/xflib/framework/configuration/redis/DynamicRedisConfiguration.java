@@ -3,16 +3,9 @@ package com.xflib.framework.configuration.redis;
 
 import java.net.UnknownHostException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -25,8 +18,6 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xflib.framework.redis.DynamicRedisConnectionFactory;
 import com.xflib.framework.redis.DynamicRedisProperties;
-import com.xflib.framework.redis.RedisConnectionFactoryProxy;
-import com.xflib.framework.utils.SpringUtils;
 
 /**
  * @author koradji
@@ -42,20 +33,8 @@ public class DynamicRedisConfiguration {
     
     @Bean("redisConnectionFactory")
     @ConditionalOnMissingBean(name = "redisConnectionFactory")
-    public DynamicRedisConnectionFactory dynamicRedisConnectionFactory(DynamicRedisProperties dynamicProperties) {
-
-        dynamicProperties.getList().forEach((item) -> {
-            String site = item.getSite();
-            if (!defaultHasDefined) {
-                defaultHasDefined = "default".equals(site);
-            }
-            addRedisConnectionFactory(site);
-        });
-
-        if (!defaultHasDefined) {
-            addRedisConnectionFactory("");
-        }
-
+    public DynamicRedisConnectionFactory dynamicRedisConnectionFactory(
+            DynamicRedisProperties dynamicProperties) {
         return new DynamicRedisConnectionFactory();
     }
 
@@ -87,23 +66,4 @@ public class DynamicRedisConfiguration {
         return template;
     }
 
-    private void addRedisConnectionFactory(String site) {
-        String beanId = String.format("redisConnectionFactory-%s", site.isEmpty() ? "default" : site);
-
-        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder
-                .genericBeanDefinition(RedisConnectionFactoryProxy.class);
-        BeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();
-        beanDefinitionBuilder.addConstructorArgValue(site);
-        BeanDefinitionRegistry registry = (DefaultListableBeanFactory) ((ConfigurableApplicationContext) SpringUtils
-                .getApplicationContext()).getBeanFactory();
-        registry.registerBeanDefinition(beanId, beanDefinition);
-
-        if (log.isDebugEnabled()) {
-            log.debug(String.format("=> %s has registed ...", beanId));
-        }
-    }
-
-    private final Logger log = LoggerFactory.getLogger(DynamicRedisConfiguration.class);
-
-    private boolean defaultHasDefined = false;
 }

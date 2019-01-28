@@ -4,6 +4,7 @@ package com.xflib.demo.redis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import com.xflib.framework.redis.DynamicRedisHolder;
@@ -12,28 +13,33 @@ import com.xflib.framework.redis.DynamicRedisHolder;
  * @author koradji
  * @date 2019/1/27
  */
-@Component//@Order(2)
-@ConditionalOnProperty(prefix="demo.enabled",name="sampleCommandLineRunner2",havingValue="true",matchIfMissing=false)
+@Component
+@ConditionalOnProperty(prefix = "demo.enabled", name = "sampleCommandLineRunner2", havingValue = "true", matchIfMissing = false)
 public class SampleCommandLineRunner2 implements CommandLineRunner {
 
     @Autowired
-    private SampleCommandLineRunner2Service sampleCommandLineRunner2Service;
-    
-    public SampleCommandLineRunner2(){
+    private RedisTemplate<String, Object> redis;
+
+    public SampleCommandLineRunner2() {
     }
 
     @Override
     public void run(String... args) throws Exception {
         System.out.println("=> 测试类, 将直接打印输出到屏幕:");
 
-        DynamicRedisHolder.setSite("default");
-        sampleCommandLineRunner2Service.run();
-        DynamicRedisHolder.setSite("30001");
-        sampleCommandLineRunner2Service.run();
-        DynamicRedisHolder.setSite("30002");
-        sampleCommandLineRunner2Service.run();
-        
-        System.out.println("=> 上线前请清除这个测试类: "+this.getClass().getName());
+        _run("default");
+        _run("30001");
+        _run("30002");
+
+        System.out.println("=> 上线前请清除这个测试类: " + this.getClass().getName());
+    }
+
+    private void _run(String site) {
+        DynamicRedisHolder.setSite(site);
+        redis.opsForValue().set("a", 1);
+        redis.opsForValue().set("b", "abc");
+        System.out.println(redis.opsForValue().get("a"));
+        System.out.println(redis.opsForValue().get("b"));
     }
 
 }
