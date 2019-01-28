@@ -12,7 +12,9 @@ import org.springframework.context.annotation.ComponentScan;
  * @date 2019/1/27
  */
 @SpringBootApplication
-@ComponentScan("com.xflib")
+@ComponentScan({
+    "com.xflib.*.configuration",
+    })
 @EnableAutoConfiguration(exclude = {
  		RedisAutoConfiguration.class,
  })

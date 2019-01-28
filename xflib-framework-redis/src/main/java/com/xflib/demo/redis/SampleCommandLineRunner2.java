@@ -13,8 +13,6 @@ import com.xflib.framework.redis.DynamicRedisHolder;
  * @author koradji
  * @date 2019/1/27
  */
-@Component
-@ConditionalOnProperty(prefix = "demo.enabled", name = "sampleCommandLineRunner2", havingValue = "true", matchIfMissing = false)
 public class SampleCommandLineRunner2 implements CommandLineRunner {
 
     @Autowired

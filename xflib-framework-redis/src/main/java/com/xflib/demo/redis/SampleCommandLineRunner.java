@@ -12,8 +12,6 @@ import com.xflib.framework.redis.DynamicRedisHolder;
  * @author koradji
  * @date 2019/1/27
  */
-@Component
-@ConditionalOnProperty(prefix="demo.enabled",name="sampleCommandLineRunner",havingValue="true",matchIfMissing=false)
 public class SampleCommandLineRunner implements CommandLineRunner {
 
     private RedisTemplate<String, Object> redis;
