@@ -14,26 +14,35 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @ConfigurationProperties(prefix = "custom.redis")
 public class DynamicRedisProperties{
-	List<RedisPropertiesEx> list; 
+    List<String> sites;
+    List<SiteRedisProperties> list; 
 
-	public List<RedisPropertiesEx> getList() {
+    public List<String> getSites() {
+        return sites;
+    }
+
+    public void setSites(List<String> sites) {
+        this.sites = sites;
+    }
+
+	public List<SiteRedisProperties> getList() {
         return list;
     }
 
-    public void setList(List<RedisPropertiesEx> list) {
+    public void setList(List<SiteRedisProperties> list) {
         this.list = list;
     }
     
-    @JsonIgnore
-    public RedisProperties getProperties(String key){
-        RedisProperties result=null;
-        for(int i=0;i<list.size();i++){
-            if (list.get(i).getSite().equals(key)){
-                result=list.get(i).getConfig();
-                break;
-            }
-        };
-        return result;
-    }
+//    @JsonIgnore
+//    public RedisProperties getProperties(String key){
+//        RedisProperties result=null;
+//        for(int i=0;i<list.size();i++){
+//            if (list.get(i).getSite().equals(key)){
+//                result=list.get(i).getConfig();
+//                break;
+//            }
+//        };
+//        return result;
+//    }
 
 }

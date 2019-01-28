@@ -26,19 +26,19 @@ public class SampleCommandLineRunner implements CommandLineRunner {
         
         System.out.println("=> 测试类, 将直接打印输出到屏幕:");
 
-        redis=DynamicRedisHolder.getRedisTemplate("default");
+        redis=DynamicRedisHolder.getRedisTemplateBySite("default");
         redis.opsForValue().set("a", 1);
         redis.opsForValue().set("b", "abc");
         System.out.println(redis.opsForValue().get("a"));
         System.out.println(redis.opsForValue().get("b"));
     
-        redis=DynamicRedisHolder.getRedisTemplate("30001");
+        redis=DynamicRedisHolder.getRedisTemplate("30001","xk");
         redis.opsForValue().set("a", 1);
         redis.opsForValue().set("b", "abc");
         System.out.println(redis.opsForValue().get("a"));
         System.out.println(redis.opsForValue().get("b"));
 
-        redis=DynamicRedisHolder.getRedisTemplate("30002");
+        redis=DynamicRedisHolder.getRedisTemplateBySite("30002");
         redis.opsForValue().set("a", 1);
         redis.opsForValue().set("b", "abc");
         System.out.println(redis.opsForValue().get("a"));

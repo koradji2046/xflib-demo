@@ -1,16 +1,16 @@
 /** Copyright (c) 2019 Koradji. */
 package com.xflib.framework.redis;
 
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
+import java.util.List;
 
 /**
  * @author koradji
  * @date 2019/1/27
  */
-public class RedisPropertiesEx {
+public class SiteRedisProperties {
 
     private String site;
-    private RedisProperties config;
+    private List<SiteSourceRedisProperties> sources;
 
     public String getSite() {
         return site;
@@ -20,11 +20,12 @@ public class RedisPropertiesEx {
         this.site = site;
     }
 
-    public RedisProperties getConfig() {
-        return config;
+    public List<SiteSourceRedisProperties> getSources() {
+        return sources;
     }
 
-    public void setConfig(RedisProperties config) {
-        this.config = config;
+    public void setSources(List<SiteSourceRedisProperties> sources) {
+        this.sources = sources;
     }
+
 }
