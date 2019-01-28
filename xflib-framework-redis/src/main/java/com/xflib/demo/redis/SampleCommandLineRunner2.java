@@ -3,9 +3,7 @@ package com.xflib.demo.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 
 import com.xflib.framework.redis.DynamicRedisHolder;
 

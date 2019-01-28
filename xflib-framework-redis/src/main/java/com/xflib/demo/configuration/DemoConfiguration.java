@@ -1,15 +1,12 @@
 /** Copyright (c) 2019 Koradji. */
 package com.xflib.demo.configuration;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import com.xflib.demo.redis.SampleCommandLineRunner;
 import com.xflib.demo.redis.SampleCommandLineRunner2;
-import com.xflib.framework.utils.SpringUtils;
 
 /**
  * @author koradji

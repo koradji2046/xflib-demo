@@ -3,10 +3,7 @@ package com.xflib.framework.redis;
 
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author koradji
