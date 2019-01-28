@@ -48,6 +48,7 @@ public class DynamicRedisConfiguration {
     }
 
     @Bean(name = "redisTemplate")
+    @ConditionalOnMissingBean(name="redisTemplate")
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public RedisTemplate<String, Object> redisTemplate(DynamicRedisConnectionFactory redisConnectionFactory) {
         RedisTemplate template = new RedisTemplate<String, Object>();

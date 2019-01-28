@@ -15,7 +15,7 @@ import com.xflib.framework.utils.SpringUtils;
 public class ApplicationConfiguration {
 
     @Bean
-    public SpringUtils SpringUtils() {
+    public SpringUtils springUtils() {
         return new SpringUtils();
     }
 
