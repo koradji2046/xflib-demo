@@ -30,7 +30,7 @@ RedisTemplate<String, Object> redisTemplate;
 
 redisTemplate.opsForValue().set("a", 1);
 ```
-### 2 手动获得RedisTemplate实例
+### 2 手动获得RedisTemplate实例1
 ```java
 RedisTemplate<String, Object> redisTemplate;
 
@@ -42,7 +42,7 @@ redisTemplate.opsForValue().set("a", 1);
 redisTemplate = DynamicRedisHolder.getRedisTemplate();
 redisTemplate.opsForValue().set("a", 1);
 ```
-### 例2
+### 3 手动获得RedisTemplate实例2
 ```java
 private RedisTemplate<String, Object> redisTemplate;
 
