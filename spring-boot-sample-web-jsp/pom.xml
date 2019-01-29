@@ -8,12 +8,18 @@
 	<name>Spring Boot Web JSP Sample</name>
 	<description>Spring Boot Web JSP Sample</description>
 
-	<parent>
-		<groupId>com.xflib.demo</groupId>
-		<artifactId>xflib-parent</artifactId>
-		<version>0.0.1</version>
-		<relativePath >..</relativePath> <!-- lookup parent from repository -->
-	</parent>
+<!-- 	<parent> -->
+<!-- 		<groupId>com.xflib.demo</groupId> -->
+<!-- 		<artifactId>xflib-parent</artifactId> -->
+<!-- 		<version>0.0.1</version> -->
+<!-- 		<relativePath >..</relativePath> lookup parent from repository -->
+<!-- 	</parent> -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.10.RELEASE</version>
+        <relativePath/> 
+    </parent>
 
 	<properties>
 		<packaging>jar</packaging>

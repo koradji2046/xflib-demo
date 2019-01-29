@@ -1,0 +1,65 @@
+logging:
+  level:
+    org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer: info
+    org.apache.catalina.core.StandardService: info
+    #com.xflib.framework.configuration.redis: debug
+    #com.xflib.framework.redis: debug
+    root: error
+
+spring:
+  application:
+    name: eureka-server
+  redis:
+    host: localhost
+    password: qzkj@1234
+    port: 6379
+    database: 0
+    pool:
+      maxActive: 2000
+      maxWait: -1
+
+custom:
+  redis:
+    sites: default, 30001,30002,30003
+    list:
+      -
+        site: 30002
+        sources:
+          -
+            source: default
+            config:
+              host: localhost
+              password: qzkj@1234
+              port: 6379
+              database: 2
+              pool:
+                maxActive: 2001
+                maxWait: -1
+          -
+            source: xk
+            config:
+              host: localhost
+              password: qzkj@1234
+              port: 6379
+              database: 3
+              pool:
+                maxActive: 2001
+                maxWait: -1
+      -
+        site: 30001
+        sources:
+          -
+            source: xk
+            config:
+              host: localhost
+              password: qzkj@1234
+              port: 6379
+              database: 4
+              pool:
+                maxActive: 2001
+                maxWait: -1
+
+# 测试类，禁止可靠删除或设置为false
+demo.enabled:
+  sampleCommandLineRunner: true
+  sampleCommandLineRunner2: true
