@@ -8,7 +8,7 @@ logging:
 
 spring:
   application:
-    name: eureka-server
+    name: test-dynamic-redis-service
   redis:
     host: localhost
     password: qzkj@1234

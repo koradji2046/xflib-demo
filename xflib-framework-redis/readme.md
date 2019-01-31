@@ -20,7 +20,20 @@
 
 ## 使用方法
 ### 1 注入RedisTemplate
-在使用RedisTemplate<String, Object>之前指定站点和数据源(一般在filter中指定，不指定时则使用默认值或当前线程最近指定的值)
+在使用RedisTemplate<String, Object>之前指定站点和数据源，一般在filter中指定，例如：
+```java
+public class MyFilter implements Filter
+{
+    public void doFilter(...) throws ...{
+      ...
+      DynamicRedisHolder.setContext("30001","xk");// 设置当前线程redis上下文
+      chain.doFilter();
+      DynamicRedisHolder.removeContext();   // 不要忘记清理当前线程redis上下文，否则会产生内存泄露
+      ...
+   }
+}
+```
+，不指定时则使用默认值或当前线程最近指定的值),注意在chain.dofilter()之后执行DynamicRedisHolder.removeContext();
 ```java
 DynamicRedisHolder.setSite("30001");  // 指定站点
 DynamicRedisHolder.setSource("xk");   // 指定数据源
@@ -39,6 +52,7 @@ RedisTemplate<String, Object> redisTemplate;
 // 指定站点
 redisTemplate = DynamicRedisHolder.getRedisTemplate("30002","xk");
 redisTemplate.opsForValue().set("a", 1);
+DynamicRedisHolder.removeContext();
 
 // 不指定站点， 即获得当前站点的RedisTemplate实例, 若果从未指定站点，将使用default
 redisTemplate = DynamicRedisHolder.getRedisTemplate();
@@ -51,11 +65,13 @@ private RedisTemplate<String, Object> redisTemplate;
 DynamicRedisHolder.setSite("default");
 redisTemplate=SpringUtils.getBean("redisTemplate",RedisTemplate.class);
 redisTemplate.opsForValue().set("a", 1);
+DynamicRedisHolder.removeContext();
 
 DynamicRedisHolder.setSite("30002");
 DynamicRedisHolder.setSource("xk")
 redisTemplate=SpringUtils.getBean("redisTemplate",RedisTemplate.class);
 redisTemplate.opsForValue().set("a", 1);
+DynamicRedisHolder.removeContext();
 ```
 ## 使用注意事项
 - 禁用RedisAutoConfiguration可获得較好的启动速度

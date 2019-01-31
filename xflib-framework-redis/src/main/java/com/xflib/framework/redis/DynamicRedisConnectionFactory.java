@@ -52,16 +52,21 @@ public class DynamicRedisConnectionFactory implements RedisConnectionFactory {
           String site=siteRedisProperties.getSite();
           siteRedisProperties.getSources().forEach((siteSourceRedisPrperties)->{
               String source=siteSourceRedisPrperties.getSource();
-                  RedisProperties config=siteSourceRedisPrperties.getConfig();
-                  createJedisConnectionFactory(site, source, config);
+              String beanName=String.format("redis-%s-%s", site,source);
+              RedisProperties config=siteSourceRedisPrperties.getConfig();
+              createJedisConnectionFactory(beanName, config);
               });
         });
         dynamicRedisProperties.getSites().forEach((site)->{//创建站点默认redis数据源
-            String beanName=String.format("%s-%s", site,"default");
+            String beanName=String.format("redis-%s-%s", site,"default");
             if (!jedisConnectionFactorys.containsKey(beanName)){
-                createJedisConnectionFactory(site, "default", defaultRedisProperties);
+                createJedisConnectionFactory(beanName, defaultRedisProperties);
             }
         });
+        String beanName=String.format("redis-%s-%s", "default","default");
+        if (!jedisConnectionFactorys.containsKey(beanName)){// //创建默认站点redis数据源
+            createJedisConnectionFactory(beanName, defaultRedisProperties);
+        }
     }
     
     @Override
@@ -95,7 +100,7 @@ public class DynamicRedisConnectionFactory implements RedisConnectionFactory {
         site=(site==null||site.isEmpty()?"default":site);
         String source=DynamicRedisHolder.getSource();
         source=(source==null||source.isEmpty()?"default":source);
-        String beanName=String.format("%s-%s", site,source);
+        String beanName=String.format("redis-%s-%s", site,source);
         if(jedisConnectionFactorys.containsKey(beanName)){
             jedisConnectionFactory= jedisConnectionFactorys.get(beanName);
             if(log.isDebugEnabled()){
@@ -109,11 +114,11 @@ public class DynamicRedisConnectionFactory implements RedisConnectionFactory {
         return jedisConnectionFactory;
     }
 
-    private void createJedisConnectionFactory(String site,String source,RedisProperties config){
+    private void createJedisConnectionFactory(String beanName/*String site,String source*/,RedisProperties config){
         RedisConnectionFactory jedisConnectionFactory=
                 (new MetaJedisConnectionFactory())
                 .createRedisConnectionFactory(config);
-        String beanName=String.format("%s-%s", site,source);
+//        String beanName=String.format("redis-%s-%s", site,source);
         jedisConnectionFactorys.put(beanName, jedisConnectionFactory);
         if(log.isDebugEnabled()){
             log.debug("=> Redis datasource [{}] has registed.",beanName);

@@ -32,13 +32,16 @@ public class SampleCommandLineRunner2 implements CommandLineRunner {
     }
 
     private void _run(String site, String source) {
-        DynamicRedisHolder.setSite(site);
-        DynamicRedisHolder.setSource(source);
+//        DynamicRedisHolder.setSite(site);
+//        DynamicRedisHolder.setSource(source);
+        DynamicRedisHolder.setContext(site, source);
         
         redis.opsForValue().set("a", 1);
         redis.opsForValue().set("b", "abc");
         System.out.println(redis.opsForValue().get("a"));
         System.out.println(redis.opsForValue().get("b"));
+        
+        DynamicRedisHolder.removeContext();
     }
 
 }

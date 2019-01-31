@@ -33,6 +33,24 @@ public class DynamicRedisHolder {
         String source = sourceContextHolder.get();
         return (source == null || source.isEmpty()) ? "default" : source;
     }
+    
+    public static void setContext(String site, String source) {
+        siteContextHolder.set(site);
+        sourceContextHolder.set(source);
+    }
+    
+    public static String getContext() {
+        String site=DynamicRedisHolder.getSite();
+        site=(site==null||site.isEmpty()?"default":site);
+        String source=DynamicRedisHolder.getSource();
+        source=(source==null||source.isEmpty()?"default":source);
+        return String.format("redis-%s-%s", site,source);
+    }
+
+    public static void removeContext(){
+        sourceContextHolder.remove();
+        siteContextHolder.remove();
+    }
 
     public static RedisTemplate<String, Object> getRedisTemplateBySite(String site) {
         return getRedisTemplate(site,null);
@@ -41,6 +59,7 @@ public class DynamicRedisHolder {
     public static RedisTemplate<String, Object> getRedisTemplateBySource(String source) {
         return getRedisTemplate(null,source);
     }
+    
      public static RedisTemplate<String, Object> getRedisTemplate() {
         return getRedisTemplate(null,null);
     }

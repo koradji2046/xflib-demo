@@ -40,6 +40,8 @@ public class SampleCommandLineRunner implements CommandLineRunner {
         System.out.println(redis.opsForValue().get("a"));
         System.out.println(redis.opsForValue().get("b"));
     
+        DynamicRedisHolder.removeContext();
+        
         System.out.println("=> 上线前请清除这个测试类: "+this.getClass().getName());
     }
 

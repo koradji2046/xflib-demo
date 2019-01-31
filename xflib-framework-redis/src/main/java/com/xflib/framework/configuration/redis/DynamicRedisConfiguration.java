@@ -28,13 +28,14 @@ import com.xflib.framework.redis.DynamicRedisProperties;
 @EnableConfigurationProperties({ DynamicRedisProperties.class,RedisProperties.class })
 public class DynamicRedisConfiguration {
 
-    public DynamicRedisConfiguration(RedisProperties properties){
+    public DynamicRedisConfiguration(
+            RedisProperties properties,
+            DynamicRedisProperties dynamicProperties){
     }
     
     @Bean("redisConnectionFactory")
     @ConditionalOnMissingBean(name = "redisConnectionFactory")
-    public DynamicRedisConnectionFactory dynamicRedisConnectionFactory(
-            DynamicRedisProperties dynamicProperties) {
+    public DynamicRedisConnectionFactory dynamicRedisConnectionFactory() {
         return new DynamicRedisConnectionFactory();
     }
 

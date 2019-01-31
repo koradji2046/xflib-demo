@@ -1,0 +1,34 @@
+logging:
+  level:
+    org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer: info
+    org.apache.catalina.core.StandardService: info
+    com.xflib.framework.configuration.amqp: debug
+    com.xflib.framework.amqp: debug
+    root: error
+
+spring:
+  application:
+    name: test-dynamic-rabbit-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: qzdatasoft
+    password: 123456
+    virtual-host: /
+
+custom:
+  rabbitmq:
+    sites: default,30001
+    list:
+      -
+        site: 30001
+        config:
+          host: localhost
+          port: 5672
+          username: qzdatasoft
+          password: 123456
+          virtual-host: 30001
+
+# 测试类，禁止可靠删除或设置为false
+demo.enabled:
+  rabbitSender: true
