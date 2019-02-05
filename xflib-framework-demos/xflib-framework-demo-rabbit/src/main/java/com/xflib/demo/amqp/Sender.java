@@ -8,15 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 
-import com.xflib.demo.configuration.amqp.DemoAdminConfiguration;
 import com.xflib.framework.amqp.DynamicRabbitConnectionFactory;
 
 /**
  * @author koradji
  * @date 2019/1/27
  */
-public class RabbitSender implements CommandLineRunner {
-    private static final Logger log = LoggerFactory.getLogger(RabbitSender.class);
+public class Sender implements CommandLineRunner {
+    private static final Logger log = LoggerFactory.getLogger(Sender.class);
 
     @Autowired
     private DynamicRabbitConnectionFactory conn;
@@ -26,17 +25,25 @@ public class RabbitSender implements CommandLineRunner {
         
         log.info("=> 测试类, 将直接打印输出到屏幕:");
 
-        RabbitMessageDataBean msg=new RabbitMessageDataBean();
+        DataBean msg=new DataBean();
         msg.setId(1);
         msg.setSite("default");
         msg.setData(Arrays.asList("a", "b", "c"));
 
-        String vHost=String.format("rabbit-%s", "30001");
+        String vHost=String.format("rabbit-%s", "default");
         int count=1000;
         for(int i=0;i<count;i++){
-            conn.send(DemoAdminConfiguration.dynamic_test_exchange,
-                    DemoAdminConfiguration.dynamic_test_queue_routingKey,
+            try{
+                msg.setId(i);
+                conn.send(Constants.dynamic_test_exchange,
+                        Constants.dynamic_test_queue_routingKey,
                     vHost,msg);
+                Thread.sleep(1000);
+            }catch(InterruptedException e){
+                Thread.interrupted();
+            }catch(Exception e){
+                log.error(e.getMessage());
+            }
         }
         log.info("=> 上线前请清除这个测试类: "+this.getClass().getName());
     }

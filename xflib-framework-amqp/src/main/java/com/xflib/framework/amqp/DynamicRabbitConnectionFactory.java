@@ -41,11 +41,12 @@ public class DynamicRabbitConnectionFactory extends AbstractRoutingConnectionFac
     
     public <T> void send( String exchange, String routingKey, String vHost, T payload) {
 
-        Message data= jackson2JsonMessageConverter.toMessage(payload, new MessageProperties());
-        data.getMessageProperties().setType(payload.getClass().getName());
-        data.getMessageProperties().setHeader("__TypeId__", payload.getClass().getName());
+//        Message data= jackson2JsonMessageConverter.toMessage(payload, new MessageProperties());
+//        data.getMessageProperties().setType(payload.getClass().getName());
+//        data.getMessageProperties().setHeader("__TypeId__", payload.getClass().getName());
         SimpleResourceHolder.bind(rabbitTemplate.getConnectionFactory(), vHost);
-        rabbitTemplate.convertAndSend(exchange,routingKey,data);
+//        rabbitTemplate.convertAndSend(exchange,routingKey,data);
+        rabbitTemplate.convertAndSend(exchange,routingKey,payload);
         SimpleResourceHolder.unbind(rabbitTemplate.getConnectionFactory());
     }
 
@@ -89,6 +90,10 @@ public class DynamicRabbitConnectionFactory extends AbstractRoutingConnectionFac
     // 监听器列表
     private Map<String,SimpleMessageListenerContainer> MessageListenerContainers=new ConcurrentHashMap<>();
 
+    @FunctionalInterface
+    public interface RegisterMessageListenerDelegate<T>{
+        public void accept(T obj, String who);
+    }
     /**
      * 注册监听器
      * @param ListenerContainerId
@@ -97,7 +102,7 @@ public class DynamicRabbitConnectionFactory extends AbstractRoutingConnectionFac
      * @return
      */
     public void RegisterMessageListener( String ListenerContainerId, 
-            Consumer<SimpleMessageListenerContainer> callback, boolean autoStartUp) {
+            RegisterMessageListenerDelegate/*Consumer*/<SimpleMessageListenerContainer> callback, boolean autoStartUp) {
         rabbitSites.forEach((key)->{
             ConnectionFactory factory=this.getTargetConnectionFactory(key);
             SimpleMessageListenerContainer simpleMessageListenerContainer =
@@ -107,8 +112,9 @@ public class DynamicRabbitConnectionFactory extends AbstractRoutingConnectionFac
             simpleMessageListenerContainer.setMessageConverter(jackson2JsonMessageConverter);
             String beanName=String.format("%s-%s", ListenerContainerId==null||ListenerContainerId.isEmpty()?
                     UUID.randomUUID().toString():ListenerContainerId,key);
+            simpleMessageListenerContainer.setBeanName(beanName);
             MessageListenerContainers.put(beanName, simpleMessageListenerContainer);
-            if(callback!=null)callback.accept(simpleMessageListenerContainer);
+            if(callback!=null)callback.accept(simpleMessageListenerContainer,beanName);
             if (autoStartUp) {
                 simpleMessageListenerContainer.start();
                 if (log.isDebugEnabled()) {

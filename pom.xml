@@ -16,5 +16,7 @@
 	<module>xflib-framework-redis</module>
 	<module>xflib-framework-starts/xflib-framework-start</module>
     <module>xflib-framework-demos/xflib-framework-demo-redis</module>
+    <module>xflib-framework-amqp</module>
+    <module>xflib-framework-demos/xflib-framework-demo-rabbit</module>
 	</modules>
 </project>

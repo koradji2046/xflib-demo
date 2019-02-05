@@ -2,11 +2,11 @@ package com.xflib.demo.amqp;
 
 import java.util.List;
 
-public class RabbitMessageDataBean {
+public class DataBean {
 
-    public RabbitMessageDataBean() {}
+    public DataBean() {}
     
-    public RabbitMessageDataBean(List<String> data, String site, Integer id) {
+    public DataBean(List<String> data, String site, Integer id) {
         super();
         this.data = data;
         this.site = site;
@@ -39,5 +39,14 @@ public class RabbitMessageDataBean {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    @Override
+    public String toString(){
+        return "RabbitMessageDataBean ["+
+                "id="+this.id+
+                "site="+this.site+
+                "data={"+String.join(",", this.data.toString())+"}"+
+                "]";
     }
 }

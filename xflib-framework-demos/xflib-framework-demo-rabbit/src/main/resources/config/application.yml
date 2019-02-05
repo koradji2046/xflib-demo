@@ -4,6 +4,7 @@ logging:
     org.apache.catalina.core.StandardService: info
     com.xflib.framework.configuration.amqp: debug
     com.xflib.framework.amqp: debug
+    com.xflib.demo.amqp: info
     root: error
 
 spring:
