@@ -44,9 +44,9 @@ public class DataBean {
     @Override
     public String toString(){
         return "RabbitMessageDataBean ["+
-                "id="+this.id+
-                "site="+this.site+
-                "data={"+String.join(",", this.data.toString())+"}"+
-                "]";
+                " id="+this.id+
+                " ,site="+this.site+
+                " ,data="+String.join(",", this.data.toString())+
+                " ]";
     }
 }
