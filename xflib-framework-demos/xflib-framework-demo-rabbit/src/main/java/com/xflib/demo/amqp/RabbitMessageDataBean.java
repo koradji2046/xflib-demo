@@ -2,14 +2,7 @@ package com.xflib.demo.amqp;
 
 import java.util.List;
 
-import com.fasterxml.jackson.databind.ser.std.SerializableSerializer;
-
-public class RabbitMessageDataBean /* extends SerializableSerializer*/{
-
-    /**
-     * 
-     */
-//    private static final long serialVersionUID = -2661254841655863869L;
+public class RabbitMessageDataBean {
 
     public RabbitMessageDataBean() {}
     

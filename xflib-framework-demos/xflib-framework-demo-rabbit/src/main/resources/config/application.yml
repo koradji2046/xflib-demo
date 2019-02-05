@@ -31,4 +31,6 @@ custom:
 
 # 测试类，禁止可靠删除或设置为false
 demo.enabled:
+  rabbitAdmin: true
   rabbitSender: true
+  rabbitReciver: true

@@ -9,7 +9,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -23,9 +22,7 @@ import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
-import com.rabbitmq.client.Channel;
 import com.xflib.framework.amqp.DynamicRabbitConnectionFactory;
-import com.xflib.framework.amqp.DynamicRabbitListenerContainerFactory;
 import com.xflib.framework.amqp.DynamicRabbitProperties;
 
 /**
@@ -34,7 +31,7 @@ import com.xflib.framework.amqp.DynamicRabbitProperties;
  * 
  */
 @Configuration
-@ConditionalOnClass({ RabbitTemplate.class, Channel.class })
+@ConditionalOnClass({ RabbitTemplate.class/*, Channel.class*/ })
 @EnableConfigurationProperties({ DynamicRabbitProperties.class,RabbitProperties.class })
 public class DynamicRabbitConfiguration {
 
@@ -68,11 +65,11 @@ public class DynamicRabbitConfiguration {
 //            return result;
 //        }
         
-        @Bean
-        public DynamicRabbitListenerContainerFactory dynamicRabbitListenerContainerFactory(){
-            DynamicRabbitListenerContainerFactory result=new DynamicRabbitListenerContainerFactory();
-            return result;
-        }
+//        @Bean
+//        public DynamicRabbitListenerContainerFactory dynamicRabbitListenerContainerFactory(){
+//            DynamicRabbitListenerContainerFactory result=new DynamicRabbitListenerContainerFactory();
+//            return result;
+//        }
         
     }
     

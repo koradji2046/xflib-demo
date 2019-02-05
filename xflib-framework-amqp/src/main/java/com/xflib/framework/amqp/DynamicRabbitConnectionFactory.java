@@ -4,16 +4,26 @@ package com.xflib.framework.amqp;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.AbstractRoutingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.RabbitConnectionFactoryBean;
 import org.springframework.amqp.rabbit.connection.SimpleResourceHolder;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 
@@ -22,6 +32,22 @@ import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
  * @date 2019/1/27
  */
 public class DynamicRabbitConnectionFactory extends AbstractRoutingConnectionFactory{
+    
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    
+    @Autowired
+    private Jackson2JsonMessageConverter jackson2JsonMessageConverter;
+    
+    public <T> void send( String exchange, String routingKey, String vHost, T payload) {
+
+        Message data= jackson2JsonMessageConverter.toMessage(payload, new MessageProperties());
+        data.getMessageProperties().setType(payload.getClass().getName());
+        data.getMessageProperties().setHeader("__TypeId__", payload.getClass().getName());
+        SimpleResourceHolder.bind(rabbitTemplate.getConnectionFactory(), vHost);
+        rabbitTemplate.convertAndSend(exchange,routingKey,data);
+        SimpleResourceHolder.unbind(rabbitTemplate.getConnectionFactory());
+    }
 
     private Logger log = LoggerFactory.getLogger(DynamicRabbitConnectionFactory.class);
 
@@ -31,11 +57,11 @@ public class DynamicRabbitConnectionFactory extends AbstractRoutingConnectionFac
     @Autowired
     private RabbitProperties defaultRabbitProperties;
 
-    // redisContext list
-    List<String> redisContexts=new ArrayList<>();
+    // rabbitContext list
+    List<String> rabbitSites=new ArrayList<>();
     
     @PostConstruct
-    public void createRedisConnectionFactory() throws UnknownHostException {
+    private void createRabbitConnectionFactory() throws UnknownHostException {
         
         dynamicRabbitProperties.getList().forEach((siteRabbitProperties)->{//创建站点指定rabbit数据源
           String site=siteRabbitProperties.getSite();
@@ -59,6 +85,45 @@ public class DynamicRabbitConnectionFactory extends AbstractRoutingConnectionFac
         // 设置默认Rabbit数据源
         this.setDefaultTargetConnectionFactory(connectionFactory);
     }
+
+    // 监听器列表
+    private Map<String,SimpleMessageListenerContainer> MessageListenerContainers=new ConcurrentHashMap<>();
+
+    /**
+     * 注册监听器
+     * @param ListenerContainerId
+     * @param factory
+     * @param callback
+     * @return
+     */
+    public void RegisterMessageListener( String ListenerContainerId, 
+            Consumer<SimpleMessageListenerContainer> callback, boolean autoStartUp) {
+        rabbitSites.forEach((key)->{
+            ConnectionFactory factory=this.getTargetConnectionFactory(key);
+            SimpleMessageListenerContainer simpleMessageListenerContainer =
+                    new SimpleMessageListenerContainer(factory);
+//            RabbitAdmin rabbitAdmin = new RabbitAdmin(factory);
+//            simpleMessageListenerContainer.setRabbitAdmin(rabbitAdmin);
+            simpleMessageListenerContainer.setMessageConverter(jackson2JsonMessageConverter);
+            String beanName=String.format("%s-%s", ListenerContainerId==null||ListenerContainerId.isEmpty()?
+                    UUID.randomUUID().toString():ListenerContainerId,key);
+            MessageListenerContainers.put(beanName, simpleMessageListenerContainer);
+            if(callback!=null)callback.accept(simpleMessageListenerContainer);
+            if (autoStartUp) {
+                simpleMessageListenerContainer.start();
+                if (log.isDebugEnabled()) {
+                    log.debug("=> Message Listener for queues-[{}] has Started.",
+                            StringUtils.join(simpleMessageListenerContainer.getQueueNames(), ","));
+                }
+            } else {
+                if(log.isDebugEnabled()){
+                    log.debug("=> Message Listener for queues-[{}] has Registed.",
+                            StringUtils.join(simpleMessageListenerContainer.getQueueNames(), ","));
+                }
+            }
+
+        });
+    }
     
 	@Override
 	protected Object determineCurrentLookupKey() {
@@ -70,10 +135,11 @@ public class DynamicRabbitConnectionFactory extends AbstractRoutingConnectionFac
         try{
             connectionFactory  = rabbitConnectionFactory(config);
             this.addTargetConnectionFactory(beanName,connectionFactory);
-            redisContexts.add(beanName);
+            rabbitSites.add(beanName);
             if(log.isDebugEnabled()){
                 log.debug("=> Rabbit datasource [{}] has Registed.",beanName);
             }
+//            this.createSimpleMessageListenerContainer(beanName, connectionFactory);
           }catch(Exception e){
               
           }
