@@ -67,7 +67,7 @@
             </dependency>
             <dependency>
                 <groupId>com.xflib.framework</groupId>
-                <artifactId>xflib-framework-ampq</artifactId>
+                <artifactId>xflib-framework-amqp</artifactId>
                 <version>${xflib-framework-rabbit.version}</version>
             </dependency>
 		</dependencies>

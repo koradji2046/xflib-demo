@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>com.xflib.framework</groupId>
-            <artifactId>xflib-framework-ampq</artifactId>
+            <artifactId>xflib-framework-amqp</artifactId>
         </dependency>
 		<dependency>
 		    <groupId>org.springframework.integration</groupId>
