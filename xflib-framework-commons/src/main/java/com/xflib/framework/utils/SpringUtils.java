@@ -85,32 +85,27 @@ public class SpringUtils implements ApplicationContextAware {
 
     }
 
-    @SuppressWarnings("rawtypes")
-    public static String getBeanName(Class clazz) {
+    public static String getBeanName(Class<?> clazz) {
         String className = clazz.getSimpleName();// 获取类名
         String big = className.substring(0, 1);// 获取首字母（类名首字母大写）
         String small = big.toLowerCase();// 将首字母变为小写
         return small + className.substring(1);// 获得已小写字母开头的类名
     }
 
-    @SuppressWarnings("rawtypes")
-    public static void registerBean(Class clazz) {
+    public static void registerBean(Class<?> clazz) {
         registerBean(clazz,null);
     }
     
-    @SuppressWarnings("rawtypes")
-    public static void registerBean(Class clazz, Function<BeanDefinitionBuilder, Boolean> callback) {
+    public static void registerBean(Class<?> clazz, Function<BeanDefinitionBuilder, Boolean> callback) {
         String beanId=getBeanName(clazz);
         registerBean(beanId,clazz,callback);
     }
     
-    @SuppressWarnings("rawtypes")
-    public static void registerBean(String beanId, Class clazz) {
+    public static void registerBean(String beanId, Class<?> clazz) {
         registerBean(beanId,clazz,null);
     }
     
-    @SuppressWarnings("rawtypes")
-    public static void registerBean(String beanId, Class clazz, Function<BeanDefinitionBuilder, Boolean> callback) {
+    public static void registerBean(String beanId, Class<?> clazz, Function<BeanDefinitionBuilder, Boolean> callback) {
         // get the BeanDefinitionBuilder
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
 
