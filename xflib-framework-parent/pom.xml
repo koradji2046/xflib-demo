@@ -3,8 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>xflib-framework-parent</artifactId>
 	<packaging>pom</packaging>
-	<name>bootstrap</name>
-	<url>http://maven.apache.org</url>
+	<name>xflib-framework-parent</name>
+	<url>http://www.xflib.com</url>
 
 	<parent>
 		<groupId>com.xflib.framework</groupId>

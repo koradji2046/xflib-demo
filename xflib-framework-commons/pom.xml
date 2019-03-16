@@ -3,8 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>xflib-framework-commons</artifactId>
 	<packaging>jar</packaging>
-	<name>bootstrap</name>
-	<url>http://maven.apache.org</url>
+	<name>xflib-framework-commons</name>
+	<url>http://www.xflib.com</url>
 
 	<parent>
 		<groupId>com.xflib.framework</groupId>

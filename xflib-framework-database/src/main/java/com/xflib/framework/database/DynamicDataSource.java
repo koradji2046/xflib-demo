@@ -2,6 +2,7 @@
 package com.xflib.framework.database;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
     private static final Logger log = LoggerFactory.getLogger(DynamicDataSource.class);
 
-    private Map<Object, Object> targetDataSources;
+    private Map<Object, Object> targetDataSources=new HashMap<>();
 
     @Autowired
     private DynamicDataSourceProperties dynamicDataSourceProperties;
@@ -41,11 +42,11 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     @Autowired
     private DataSourceProperties defaultDataSourceProperties;
 
-    private boolean defaultHasDefined = false;
+//    private boolean defaultHasDefined = false;
 
-    public static Map<String, String> getVendorProperties(JpaProperties jpaProperties, DataSource dataSource) {
-        return jpaProperties.getHibernateProperties(dataSource);
-    }
+//    public static Map<String, String> getVendorProperties(JpaProperties jpaProperties, DataSource dataSource) {
+//        return jpaProperties.getHibernateProperties(dataSource);
+//    }
 
     @PostConstruct
     public void init() {
@@ -77,8 +78,9 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
          */
         dynamicDataSourceProperties.getList().forEach((siteSourceDatasourceProperties) -> {// 创建站点指定datasource
             String site = siteSourceDatasourceProperties.getSite();
-            defaultHasDefined = false;
-            siteSourceDatasourceProperties.getSources().forEach((siteSourceRedisPrperties) -> {
+            boolean defaultHasDefined = false;
+            for(SiteSourceDataSourceProperties siteSourceRedisPrperties : siteSourceDatasourceProperties.getSources()){
+//            siteSourceDatasourceProperties.getSources().forEach((siteSourceRedisPrperties) -> {
                 boolean isNotDefined = true;
                 String source = siteSourceRedisPrperties.getSource();
                 if (source.equals("master") || source.equals("default")) {
@@ -97,7 +99,8 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
                         defaultHasDefined = true;
                     }
                 }
-            });
+            };
+            //);
         });
         String beanName = String.format("dataSource-%s-%s", "default", "default");
         if (!targetDataSources.containsKey(beanName)) {// //创建默认站点datasource
@@ -216,11 +219,14 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     @Override
     protected Object determineCurrentLookupKey() {
         @SuppressWarnings("deprecation")
-        String re = DynamicDataSourceHolder.getDataSource();
-        if (logger.isDebugEnabled()) {
-            logger.info("=> 当前使用的数据源:" + re);
+        String key = DynamicDataSourceHolder.getDataSource();
+        if(!this.targetDataSources.containsKey(key)){
+        	throw new RuntimeException("=> 指定的数据源不存在!");
         }
-        return re;
+        if (logger.isDebugEnabled()) {
+            logger.info("=> 当前使用的数据源:" + key);
+        }
+        return key;
     }
 
     @Override
@@ -229,8 +235,8 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         super.setTargetDataSources(targetDataSources);
     }
 
-    public Map<Object, Object> dataSources() {
-        return this.targetDataSources;
-    }
+//    public Map<Object, Object> dataSources() {
+//        return this.targetDataSources;
+//    }
 
 }

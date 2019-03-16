@@ -55,7 +55,7 @@ public class DynamicDataSourceHolder {
         site=(site==null||site.isEmpty()?"default":site);
         String source=DynamicDataSourceHolder.getSource();
         source=(source==null||source.isEmpty()?"default":source);
-        return String.format("datasource-%s-%s", site,source);
+        return String.format("dataSource-%s-%s", site,source);
     }
 
     public static void removeContext(){

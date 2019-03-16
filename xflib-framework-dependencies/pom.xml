@@ -28,6 +28,7 @@
 		<xflib-framework-commons.version>1.0.0-SNAPSHOT</xflib-framework-commons.version>
 		<xflib-framework-redis.version>1.0.0-SNAPSHOT</xflib-framework-redis.version>
 		<xflib-framework-rabbit.version>1.0.0-SNAPSHOT</xflib-framework-rabbit.version>
+		<xflib-framework-database.version>1.0.0-SNAPSHOT</xflib-framework-database.version>
 	</properties>
 
 	<dependencyManagement>
@@ -83,6 +84,11 @@
 				<groupId>com.xflib.framework</groupId>
 				<artifactId>xflib-framework-amqp</artifactId>
 				<version>${xflib-framework-rabbit.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.xflib.framework</groupId>
+				<artifactId>xflib-framework-database</artifactId>
+				<version>${xflib-framework-database.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

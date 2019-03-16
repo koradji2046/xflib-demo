@@ -6,7 +6,7 @@
 	<artifactId>xflib-framework</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>XFLib Framework Project Parent</name>
+	<name>XFLib Framework Project</name>
     <description>XFLib Framework Project Parent</description>
 
 	<modules>
@@ -14,9 +14,14 @@
 	<module>xflib-framework-parent</module>
     <module>xflib-framework-commons</module>
 	<module>xflib-framework-redis</module>
-	<module>xflib-framework-starts/xflib-framework-start</module>
-    <module>xflib-framework-demos/xflib-framework-demo-redis</module>
     <module>xflib-framework-amqp</module>
+    <module>xflib-framework-database</module>
+
+	<module>xflib-framework-starts/xflib-framework-start</module>
+
     <module>xflib-framework-demos/xflib-framework-demo-rabbit</module>
+    <module>xflib-framework-demos/xflib-framework-demo-redis</module>
+    <module>xflib-framework-demos/xflib-framework-demo-database</module>
 	</modules>
+	<url>http://www.xflib.com</url>
 </project>
