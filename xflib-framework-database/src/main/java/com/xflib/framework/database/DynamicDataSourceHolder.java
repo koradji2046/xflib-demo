@@ -5,7 +5,7 @@ package com.xflib.framework.database;
  * @author koradji
  * @date 2019/1/27
  */
-public class DynamicDataSourceHolder {
+public abstract class DynamicDataSourceHolder {
 
     private static InheritableThreadLocal<String> siteContextHolder = 
             new InheritableThreadLocal<String>(); 
@@ -62,24 +62,5 @@ public class DynamicDataSourceHolder {
         sourceContextHolder.remove();
         siteContextHolder.remove();
     }
-
-//    public static RedisTemplate<String, Object> getRedisTemplateBySite(String site) {
-//        return getRedisTemplate(site,null);
-//    }
-//
-//    public static RedisTemplate<String, Object> getRedisTemplateBySource(String source) {
-//        return getRedisTemplate(null,source);
-//    }
-//    
-//     public static RedisTemplate<String, Object> getRedisTemplate() {
-//        return getRedisTemplate(null,null);
-//    }
-//    
-//    @SuppressWarnings("unchecked")
-//    public static RedisTemplate<String, Object> getRedisTemplate(String site, String source) {
-//        if(site!=null && !site.isEmpty())DynamicDatabaseHolder.setSite(site);
-//        if(source!=null && !source.isEmpty())DynamicDatabaseHolder.setSource(source);
-//        return SpringUtils.getBean("redisTemplate", RedisTemplate.class);
-//    }
 
 }

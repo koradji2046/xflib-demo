@@ -37,6 +37,10 @@
             <groupId>com.xflib.framework</groupId>
             <artifactId>xflib-framework-commons</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.xflib.framework</groupId>
+            <artifactId>xflib-framework-redis</artifactId>
+        </dependency>
 
   </dependencies>
 

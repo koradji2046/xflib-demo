@@ -151,4 +151,8 @@ public class Constants {
 //				return re;
 //			}
 //	 };
+	
+	public static final String YML_SysName="";
+	public static final String YML_IdGenerateorCacheCapacity="sys.idIndexUpdCycle";
+	public static final String YML_IdPrefix="";
 }
