@@ -11,9 +11,9 @@
 
 		<!-- 这是对tomcatserver.xml文件的修改点：增加 hostConfigClass 属性配置 -->
         <Engine name="Catalina" defaultHost="localhost">
-            <Host name="localhost" appBase="webapps" hostConfigClass="com.qzdatasoft.tomcat.ContextSequenceHostConfig" />
+            <Host name="localhost" appBase="webapps" hostConfigClass="com.xflib.tomcat.ContextSequenceHostConfig" />
             <!--
-			<Host name="localhost" appBase="webapps" unpackWARs="false" autoDeploy="false" hostConfigClass="com.qzdatasoft.tomcat.ContextSequenceHostConfig" />
+			<Host name="localhost" appBase="webapps" unpackWARs="false" autoDeploy="false" hostConfigClass="com.xflib.tomcat.ContextSequenceHostConfig" />
             -->
         </Engine>
 

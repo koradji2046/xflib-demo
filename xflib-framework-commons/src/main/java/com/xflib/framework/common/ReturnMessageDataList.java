@@ -1,11 +1,11 @@
-/**Copyright: Copyright (c) 2016, 湖南强智科技发展有限公司*/
+/**Copyright: Copyright (c) 2016, Koradji */
 package com.xflib.framework.common;
 
 /**
  * Search结果集存入ReturnMessageInfo的类<br>
  *
  * History:<br> 
- *    . 1.0.0.20161011, com.qzdatasoft.koradji, Create<br>
+ *    . 1.0.0.20161011, Koradji, Create<br>
  *
  */
 @SuppressWarnings("serial")

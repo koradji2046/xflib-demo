@@ -1,4 +1,4 @@
-package com.qzdatasoft.framework.tomcat;
+package com.xflib.framework.tomcat;
 
 import java.io.BufferedReader;
 import java.io.IOException;

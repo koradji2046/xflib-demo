@@ -8,7 +8,7 @@ package com.xflib.framework.common;
  * BaseException(String errorCode, Throwable cause)当做cause传入
  * <br>
  * History:<br> 
- *    . v1.0.0.20170104, com.qzdatasoft.Koradji, Create<br>
+ *    . v1.0.0.20170104, Koradji, Create<br>
  *    . 20170531, wangshi, 修改带参数的异常处理方式，【messageParam/消息参数】，不做任何处理直接把参数返回，参数的处理在ReturnMessageInfo.setErrorCode(BaseException e)里完成    <br>
  */
 public class BaseException extends RuntimeException{

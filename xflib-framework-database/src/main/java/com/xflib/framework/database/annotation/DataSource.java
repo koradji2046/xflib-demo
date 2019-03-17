@@ -1,4 +1,4 @@
-/**Copyright: Copyright (c) 2016, 湖南强智科技发展有限公司*/
+/**Copyright: Copyright (c) 2016, Koradji */
 package com.xflib.framework.database.annotation;
 
 import java.lang.annotation.ElementType;
@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * 动态数据源注解<br>
  * <br>
  * History:<br> 
- *    . v1.0.0.20161102, com.qzdatasoft.Administrator, Create<br>
+ *    . v1.0.0.20161102, Koradji, Create<br>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})

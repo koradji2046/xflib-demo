@@ -7,24 +7,26 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>XFLib Framework Project</name>
-    <description>XFLib Framework Project Parent</description>
+	<url>http://www.xflib.com</url>
+	<description>XFLib Framework Project Parent</description>
 
 	<modules>
-	<module>xflib-framework-dependencies</module>
-	<module>xflib-framework-parent</module>
-    <module>xflib-framework-commons</module>
-	<module>xflib-framework-redis</module>
-    <module>xflib-framework-amqp</module>
-    <module>xflib-framework-database</module>
+		<module>xflib-framework-dependencies</module>
+		<module>xflib-framework-parent</module>
+		<module>xflib-framework-commons</module>
+		<module>xflib-framework-redis</module>
+		<module>xflib-framework-amqp</module>
+		<module>xflib-framework-database</module>
 
-	<module>xflib-framework-starts/xflib-framework-start</module>
+		<module>xflib-framework-starts/xflib-framework-start</module>
 
-    <module>xflib-framework-tools/tomcat-context-sequence/tomcat-context-sequence-core</module>
-    <module>xflib-framework-tools/tomcat-context-sequence/tomcat-context-sequence-demo</module>
+		<module>xflib-framework-demos/xflib-framework-demo-rabbit</module>
+		<module>xflib-framework-demos/xflib-framework-demo-redis</module>
+		<module>xflib-framework-demos/xflib-framework-demo-database</module>
 
-    <module>xflib-framework-demos/xflib-framework-demo-rabbit</module>
-    <module>xflib-framework-demos/xflib-framework-demo-redis</module>
-    <module>xflib-framework-demos/xflib-framework-demo-database</module>
+		<module>xflib-framework-tools/tomcat-context-sequence/tomcat-context-sequence-core</module>
+		<module>xflib-framework-tools/tomcat-context-sequence/tomcat-context-sequence-demo</module>
+
+		<module>xflib-framework-demos/spring-boot-sample-web-jsp</module>
 	</modules>
-	<url>http://www.xflib.com</url>
 </project>

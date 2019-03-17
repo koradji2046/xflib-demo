@@ -23,7 +23,7 @@ spring:
     properties:
       hibernate:
         cache.provider_class: org.hibernate.cache.NocacheProvider
-        #dialect: com.qzdatasoft.framework.basesuport.hibernate.MyOracleDialect
+        #dialect: com.xflib.framework.basesuport.hibernate.MyOracleDialect
         #default-schema: QZJH_USER_PT
         format-sql: true
         show-sql: true

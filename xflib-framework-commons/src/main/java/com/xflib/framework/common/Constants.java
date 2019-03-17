@@ -1,4 +1,4 @@
-/**Copyright: Copyright (c) 2016, 湖南强智科技发展有限公司*/
+/**Copyright: Copyright (c) 2016, Koradji*/
 package com.xflib.framework.common;
 
 import org.slf4j.Logger;
@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
  * 常量
  *
  * History:<br> 
- *    . v1.0.0.20180105, com.qzdatasoft.koradji, Added: 增加了几个常量<br>
- *    . v1.0.0.20170805, com.qzdatasoft.Administrator, Create<br>
+ *    . v1.0.0.20180105, Koradji, Added: 增加了几个常量<br>
+ *    . v1.0.0.20170805, Koradji, Create<br>
   */
 public class Constants {
 
@@ -30,13 +30,13 @@ public class Constants {
 	 public static final String PAGESIZE_DEFAULT_STR					= "30"; 
 	 
 	 /** Session 当前语种 关键字*/
-	public static final String SESSION_KEY_LANGUAGE_ID = "QZDATASOFT_FRAMEWORK_SESSION_KEY_LANGUAGE";
+	public static final String SESSION_KEY_LANGUAGE_ID = "XFLIB_FRAMEWORK_SESSION_KEY_LANGUAGE";
 	 /**  Session Site ID*/
-	 public static final String SESSION_KEY_SITE_ID 					= "QZDATASOFT_FRAMEWORK_SESSION_KEY_SITE";
+	 public static final String SESSION_KEY_SITE_ID 					= "XFLIB_FRAMEWORK_SESSION_KEY_SITE";
 	 /** Session  当前用户从哪一个APP登录*/
-	 public static final String SESSION_KEY_APP_ID					= "QZDATASOFT_FRAMEWORK_SESSION_KEY_APP_ID";
+	 public static final String SESSION_KEY_APP_ID					= "XFLIB_FRAMEWORK_SESSION_KEY_APP_ID";
 	 /** Session  当前登录用户代码*/
-	 public static final String SESSION_KEY_LOGIN_IDENTITY	= "QZDATASOFT_FRAMEWORK_SESSION_KEY_LOGIN_IDENTITY";
+	 public static final String SESSION_KEY_LOGIN_IDENTITY	= "XFLIB_FRAMEWORK_SESSION_KEY_LOGIN_IDENTITY";
 
 	 /** 
 	  * Session  当前登录用户可使用的角色权限列表,数据类型：Map(String, List(Map(String, String)))
@@ -46,39 +46,39 @@ public class Constants {
 	  * list.map.put("RESOURCE",RESOURCE)
 	  * list.map.put("INSTANCE",INSTANCE)
 	  * */
-	 public static final String SESSION_KEY_USER_ROLE_PERMISSION	= "QZDATASOFT_FRAMEWORK_SESSION_KEY_USER_ROLE_PERMISSION";
-	 public static final String SESSION_KEY_USER_CURRENT_PERMISSION	= "QZDATASOFT_FRAMEWORK_SESSION_KEY_USER_CURRENT_PERMISSION";
+	 public static final String SESSION_KEY_USER_ROLE_PERMISSION	= "XFLIB_FRAMEWORK_SESSION_KEY_USER_ROLE_PERMISSION";
+	 public static final String SESSION_KEY_USER_CURRENT_PERMISSION	= "XFLIB_FRAMEWORK_SESSION_KEY_USER_CURRENT_PERMISSION";
 
 	 /** 
 	  * Session  当前登录用户可使用的菜单资源,数据类型：Map&lt;String, List&lt;Map&lt;String, Object&gt; &gt; &gt; 
 	  * map.put("roleCode",menuTree)
 	  * 这里只存储了Code，不存储具体的权限值
 	  * */
-	 public static final String SESSION_KEY_USER_ROLE_MENU	= "QZDATASOFT_FRAMEWORK_SESSION_KEY_USER_ROLE_MENU";
-	 public static final String SESSION_KEY_USER_CURRENT_MENU	= "QZDATASOFT_FRAMEWORK_SESSION_KEY_USER_CURRENT_MENU";
+	 public static final String SESSION_KEY_USER_ROLE_MENU	= "XFLIB_FRAMEWORK_SESSION_KEY_USER_ROLE_MENU";
+	 public static final String SESSION_KEY_USER_CURRENT_MENU	= "XFLIB_FRAMEWORK_SESSION_KEY_USER_CURRENT_MENU";
 
 	 /** 
 	  * 用户当前角色
 	  * SysPermissionBean.USER_PERMISSION/roleCode
 	  * */
-	 public static final String SESSION_KEY_USER_CURRENT_ROLE	= "QZDATASOFT_FRAMEWORK_SESSION_KEY_USER_CURRENT_ROLE";
+	 public static final String SESSION_KEY_USER_CURRENT_ROLE	= "XFLIB_FRAMEWORK_SESSION_KEY_USER_CURRENT_ROLE";
 
 	 /** 
 	  * 用户当前代理的用户
 	  * userAccount
 	  * 没有代理就是空，有代理就是用户帐号信息
 	  * */
-	 public static final String SESSION_KEY_USER_CURRENT_AGENT	= "QZDATASOFT_FRAMEWORK_SESSION_KEY_USER_CURRENT_AGENT";
+	 public static final String SESSION_KEY_USER_CURRENT_AGENT	= "XFLIB_FRAMEWORK_SESSION_KEY_USER_CURRENT_AGENT";
 	 
 	 /** Session  当前登录用户坐在HR组织的代码*/
-	 public static final String SESSION_KEY_LOGIN_ORG_HR		= "QZDATASOFT_FRAMEWORK_SESSION_KEY_LOGIN_ORG_HR";
+	 public static final String SESSION_KEY_LOGIN_ORG_HR		= "XFLIB_FRAMEWORK_SESSION_KEY_LOGIN_ORG_HR";
 	 /** Session SSO 令牌 */
-	 public static final String SESSION_KEY_TOKEN					= "QZDATASOFT_FRAMEWORK_SESSION_KEY_TOKEN";
+	 public static final String SESSION_KEY_TOKEN					= "XFLIB_FRAMEWORK_SESSION_KEY_TOKEN";
 	 /** Session RSA 密钥对 关键字*/
-	 public static final String SESSION_KEY_RSA						= "QZDATASOFT_FRAMEWORK_SESSION_KEY_RSA";
-//	 public static final String SESSION_KEY_AUTH_CODE			= "QZDATASOFT_FRAMEWORK_SESSION_KEY_AUTH_CODE";
-//	 public static final String SESSION_KEY_RSA_PRIVATE		= "QZDATASOFT_FRAMEWORK_SESSION_KEY_RSA_PRI";
-//	 public static final String SESSION_KEY_RSA_PUBLIC			= "QZDATASOFT_FRAMEWORK_SESSION_KEY_RSA_PUB";
+	 public static final String SESSION_KEY_RSA						= "XFLIB_FRAMEWORK_SESSION_KEY_RSA";
+//	 public static final String SESSION_KEY_AUTH_CODE			= "XFLIB_FRAMEWORK_SESSION_KEY_AUTH_CODE";
+//	 public static final String SESSION_KEY_RSA_PRIVATE		= "XFLIB_FRAMEWORK_SESSION_KEY_RSA_PRI";
+//	 public static final String SESSION_KEY_RSA_PUBLIC			= "XFLIB_FRAMEWORK_SESSION_KEY_RSA_PUB";
 
 
 	 /** http请求专用身份验证码关键字 */

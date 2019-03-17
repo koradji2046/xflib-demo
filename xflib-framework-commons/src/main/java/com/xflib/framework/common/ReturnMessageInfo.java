@@ -1,4 +1,4 @@
-/**Copyright: Copyright (c) 2016, 湖南强智科技发展有限公司*/
+/**Copyright: Copyright (c) 2016, Koradji */
 package com.xflib.framework.common;
 
 import java.util.Date;
@@ -16,7 +16,7 @@ import com.xflib.framework.utils.DateTimeUtils;
  * errorCode 0表示成功，小于0表示出错，大于0由业务定义
  * 
  * History:<br>
- *  . 1.0.0.20160910, com.qzdatasoft.koradji, Create<br>
+ *  . 1.0.0.20160910, Koradji, Create<br>
  *  . 20170531, wangshi, 增加方法：setErrorCode(BaseException e)，处理带参数异常信息    <br>
  *  . 20171227, koradji, fixed：对messageUtils.getmessage()的调用    <br>
  * 

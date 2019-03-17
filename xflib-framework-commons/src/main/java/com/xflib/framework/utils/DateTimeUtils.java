@@ -1,4 +1,4 @@
-/**Copyright: Copyright (c) 2016, 湖南强智科技发展有限公司*/
+/**Copyright: Copyright (c) 2016, Koradji */
 package com.xflib.framework.utils;
 
 import java.text.ParseException;
@@ -13,7 +13,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
  * 日期帮助类
  *
  * History:<br> 
- *    . 1.0.0.20160910, com.qzdatasoft.koradji, Create<br>
+ *    . 1.0.0.20160910, Koradji, Create<br>
  *
  */
 public class DateTimeUtils {

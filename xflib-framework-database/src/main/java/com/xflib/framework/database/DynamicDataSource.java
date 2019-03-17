@@ -1,4 +1,4 @@
-/**Copyright: Copyright (c) 2016, 湖南强智科技发展有限公司*/
+/**Copyright: Copyright (c) 2016, Koradji */
 package com.xflib.framework.database;
 
 import java.lang.reflect.InvocationTargetException;
@@ -27,7 +27,7 @@ import com.xflib.framework.utils.SpringUtils;
  * Dao动态数据源路由器<br>
  * 
  * History:<br>
- * . 1.0.0.20161024, com.qzdatasoft.Koradji, Create<br>
+ * . 1.0.0.20161024, Koradji, Create<br>
  *
  */
 public class DynamicDataSource extends AbstractRoutingDataSource {

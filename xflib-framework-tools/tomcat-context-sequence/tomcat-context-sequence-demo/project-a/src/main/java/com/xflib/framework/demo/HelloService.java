@@ -1,4 +1,4 @@
-package com.qzdatasoft.demo;
+package com.xflib.framework.demo;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;

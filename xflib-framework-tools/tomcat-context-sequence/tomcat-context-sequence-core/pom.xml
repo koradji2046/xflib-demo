@@ -7,20 +7,9 @@
 	<name>tomcat-context-sequence</name>
 	<description>tomcat-context-sequence</description>
 
-<!-- 	<parent> -->
-<!-- 		<groupId>com.qzdatasoft.supports</groupId> -->
-<!-- 		<artifactId>qzdatasoft-supports-build</artifactId> -->
-<!-- 		<version>1.2.0-SNAPSHOT</version> -->
-<!-- 		<relativePath>../qzdatasoft-supports-build</relativePath> -->
-<!-- 	</parent> -->
-<properties>
+	<properties>
 		<org.springframework.boot.version>1.5.10.RELEASE</org.springframework.boot.version>
-</properties>
-
-<!-- 	<scm> -->
-<!-- 		<connection>scm:svn:${connection.url}</connection> -->
-<!-- 		<developerConnection>scm:svn:${developerConnection.url}</developerConnection> -->
-<!-- 	</scm> -->
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -29,7 +18,7 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

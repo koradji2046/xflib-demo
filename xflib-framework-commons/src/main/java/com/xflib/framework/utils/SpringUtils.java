@@ -20,8 +20,8 @@ import org.springframework.web.context.WebApplicationContext;
  * Spring帮助类
  *
  * History:<br>
- * . 1.0.0.20171225, com.qzdatasoft.koradji, fixed: 去掉无用的无参构造函数<br>
- * . 1.0.0.20160910, com.qzdatasoft.koradji, Create<br>
+ * . 1.0.0.20171225, koradji, fixed: 去掉无用的无参构造函数<br>
+ * . 1.0.0.20160910, koradji, Create<br>
  *
  */
 public class SpringUtils implements ApplicationContextAware {
