@@ -19,6 +19,9 @@
 
 	<module>xflib-framework-starts/xflib-framework-start</module>
 
+    <module>xflib-framework-tools/tomcat-context-sequence/tomcat-context-sequence-core</module>
+    <module>xflib-framework-tools/tomcat-context-sequence/tomcat-context-sequence-demo</module>
+
     <module>xflib-framework-demos/xflib-framework-demo-rabbit</module>
     <module>xflib-framework-demos/xflib-framework-demo-redis</module>
     <module>xflib-framework-demos/xflib-framework-demo-database</module>

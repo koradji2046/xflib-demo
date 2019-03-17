@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Server port="8085" shutdown="SHUTDOWN">
+
+    <Listener className="org.apache.catalina.core.JasperListener"/>
+
+    <Service name="Catalina">
+        <Connector port="8080" connectionTimeout="20000" />
+
+        <!-- This is the optional AJP connector
+        <Connector port="9019" protocol="AJP/1.3"/>  -->
+
+		<!-- 这是对tomcatserver.xml文件的修改点：增加 hostConfigClass 属性配置 -->
+        <Engine name="Catalina" defaultHost="localhost">
+            <Host name="localhost" appBase="webapps" hostConfigClass="com.qzdatasoft.tomcat.ContextSequenceHostConfig" />
+            <!--
+			<Host name="localhost" appBase="webapps" unpackWARs="false" autoDeploy="false" hostConfigClass="com.qzdatasoft.tomcat.ContextSequenceHostConfig" />
+            -->
+        </Engine>
+
+    </Service>
+</Server>
