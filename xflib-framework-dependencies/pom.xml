@@ -29,6 +29,7 @@
 		<xflib-framework-redis.version>1.0.0-SNAPSHOT</xflib-framework-redis.version>
 		<xflib-framework-rabbit.version>1.0.0-SNAPSHOT</xflib-framework-rabbit.version>
 		<xflib-framework-database.version>1.0.0-SNAPSHOT</xflib-framework-database.version>
+		<xflib-framework-sdk-core.version>1.0.0-SNAPSHOT</xflib-framework-sdk-core.version>
 	</properties>
 
 	<dependencyManagement>
@@ -90,6 +91,12 @@
 				<artifactId>xflib-framework-database</artifactId>
 				<version>${xflib-framework-database.version}</version>
 			</dependency>
+	        <dependency>
+	            <groupId>com.xflib.framework</groupId>
+	            <artifactId>xflib-framework-sdk-core</artifactId>
+	            <version>${xflib-framework-sdk-core.version}</version>
+	        </dependency>
+
 		</dependencies>
 	</dependencyManagement>
 </project>

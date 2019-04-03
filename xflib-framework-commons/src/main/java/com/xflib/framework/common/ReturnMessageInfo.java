@@ -6,9 +6,13 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 //import com.esotericsoftware.minlog.Log;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xflib.framework.utils.DateTimeUtils;
+import com.xflib.framework.utils.JsonUtils;
 
 /**
  * 
@@ -24,7 +28,7 @@ import com.xflib.framework.utils.DateTimeUtils;
 @SuppressWarnings("serial")
 @XmlRootElement
 public class ReturnMessageInfo implements java.io.Serializable{
-//	private static Logger log = LoggerFactory.getLogger(ReturnMessageInfo.class);
+	private static Logger log = LoggerFactory.getLogger(ReturnMessageInfo.class);
 	private String errorCode = Constants.ERROE_CODE_DEFAULT; // success成功,
 																// UnknownException未定义或未初始化的错误代码,
 																// 其他由业务定义
@@ -263,30 +267,25 @@ public class ReturnMessageInfo implements java.io.Serializable{
 		this.errorMessageParam = errorMessageParam;
 	}
 
-//	public String toJson(){
-//		String out="";
-//		try{
-//			JSONObject jsonResult = JSONObject.fromObject(this);
-//			out=jsonResult.toString();
-//		}catch(Exception e1){
-////			Log.warn("message.toJson.failed");
-//			Log.warn("将消息对象转换为json字符串失败");
-//		}
-//		
-//		return out;
-//	}
-//	
-//	public static ReturnMessageInfo fromJson(String json){
-//		ReturnMessageInfo result=null;
-//		try{
-//			result= new ObjectMapper().readValue(json, ReturnMessageInfo.class);
-////			JSONObject jsonobject = JSONObject.fromObject(result.getData());
-////			VirtualTestUnit.ip=	jsonobject.getString("ip");
-////			Aaa aaa=(Aaa)JSONObject.toBean(jsonobject, Aaa.class);
-//		}catch(Exception e){
-//			Log.warn("json字符串转换为将消息对象失败");
-//		}
-//		
-//		return result;
-//	}
+	public String toJson(){
+		String out="";
+		try{
+			out=JsonUtils.toJson(this);
+		}catch(Exception e1){
+			log.warn("将消息对象转换为json字符串失败");
+		}
+		
+		return out;
+	}
+	
+	public static ReturnMessageInfo fromJson(String json){
+		ReturnMessageInfo result=null;
+		try{
+			result= JsonUtils.toObject(ReturnMessageInfo.class, json);
+		}catch(Exception e){
+			log.warn("json字符串转换为将消息对象失败");
+		}
+		
+		return result;
+	}
 }
