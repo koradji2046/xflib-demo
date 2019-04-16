@@ -36,7 +36,7 @@ import org.hibernate.type.Type;
 import org.jboss.logging.Logger;
 
 import com.xflib.framework.common.BaseException;
-import com.xflib.framework.configuration.SysProperties;
+import com.xflib.framework.configuration.database.IdGeneratorProperties;
 import com.xflib.framework.utils.DateTimeUtils;
 import com.xflib.framework.utils.JedisUtil;
 import com.xflib.framework.utils.StringUtils;
@@ -77,7 +77,7 @@ public class IdGenerator extends TableGenerator {
 		/** 按周 */		WEEK,
 		/** 按月 */		MONTH,
 		/** 按季 */		QUARTER,
-		/** 按半年 */		HALFOONEYEAR,
+		/** 按半年 */	HALFOONEYEAR,
 		/** 按年 */		YEAR,
 		/** 直到最大 */		MAX,
 	}
@@ -132,14 +132,14 @@ public class IdGenerator extends TableGenerator {
 	
 	//id流水号更新周期
 	private String getIdIndexUpdCycle(){
-		return SysProperties.getInstance().getIdIndexUpdCycle();
+		return IdGeneratorProperties.getInstance().getIdIndexUpdCycle();
 //		return CommonContext.getIdIndexUpdCycle();
 	}
 	private String getIdPrefix(){
 		return IdGeneratorHolder.getPrefix();
 	}
 	private String getSysName(){
-		return SysProperties.getInstance().getSysName();
+		return IdGeneratorProperties.getInstance().getSysName();
 //		return CommonContext.getSysName();
 	}
 	

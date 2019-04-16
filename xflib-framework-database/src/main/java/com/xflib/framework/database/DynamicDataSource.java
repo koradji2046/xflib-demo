@@ -21,6 +21,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import com.xflib.framework.configuration.database.DynamicDataSourceProperties;
 import com.xflib.framework.utils.SpringUtils;
 
 /**

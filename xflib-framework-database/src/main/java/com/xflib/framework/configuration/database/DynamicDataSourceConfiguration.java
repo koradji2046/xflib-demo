@@ -28,7 +28,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor;
 
 import com.xflib.framework.database.DynamicDataSource;
-import com.xflib.framework.database.DynamicDataSourceProperties;
 import com.xflib.framework.database.DynamicDatasourceTransactionInterceptor;
 
 /**

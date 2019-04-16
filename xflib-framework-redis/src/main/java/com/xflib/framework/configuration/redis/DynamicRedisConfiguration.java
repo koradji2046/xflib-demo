@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xflib.framework.redis.DynamicRedisConnectionFactory;
-import com.xflib.framework.redis.DynamicRedisProperties;
+import com.xflib.framework.redis.RedisBeanPostProcessor;
 
 /**
  * @author koradji
@@ -31,6 +31,11 @@ public class DynamicRedisConfiguration {
     public DynamicRedisConfiguration(
             RedisProperties properties,
             DynamicRedisProperties dynamicProperties){
+    }
+    
+    @Bean
+    public RedisBeanPostProcessor redisBeanPostProcessor(){
+    	return new RedisBeanPostProcessor(dynamicRedisConnectionFactory());
     }
     
     @Bean("redisConnectionFactory")
@@ -48,24 +53,24 @@ public class DynamicRedisConfiguration {
         return template;
     }
 
-    @Bean(name = "redisTemplate")
-    @ConditionalOnMissingBean(name="redisTemplate")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public RedisTemplate<String, Object> redisTemplate(DynamicRedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate template = new RedisTemplate<String, Object>();
-        template.setConnectionFactory(redisConnectionFactory);
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
-        StringRedisSerializer ser = new StringRedisSerializer();
-        template.setKeySerializer(ser);
-        template.setHashKeySerializer(ser);
-        template.setHashValueSerializer(jackson2JsonRedisSerializer);
-        template.setValueSerializer(jackson2JsonRedisSerializer);
-        template.afterPropertiesSet();
-        return template;
-    }
+//    @Bean(name = "redisTemplate")
+//    @ConditionalOnMissingBean(name="redisTemplate")
+//    @SuppressWarnings({ "rawtypes", "unchecked" })
+//    public RedisTemplate<String, Object> redisTemplate(DynamicRedisConnectionFactory redisConnectionFactory) {
+//        RedisTemplate template = new RedisTemplate<String, Object>();
+//        template.setConnectionFactory(redisConnectionFactory);
+//        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+//        ObjectMapper om = new ObjectMapper();
+//        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+//        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+//        jackson2JsonRedisSerializer.setObjectMapper(om);
+//        StringRedisSerializer ser = new StringRedisSerializer();
+//        template.setKeySerializer(ser);
+//        template.setHashKeySerializer(ser);
+//        template.setHashValueSerializer(jackson2JsonRedisSerializer);
+//        template.setValueSerializer(jackson2JsonRedisSerializer);
+//        template.afterPropertiesSet();
+//        return template;
+//    }
 
 }

@@ -10,7 +10,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * 找出maven下载出错的文件 Created by xiejx618 on 14-4-1.
+ * 找出maven下载出错的文件 Created by koradji on 20190415.
  */
 public class MavenUtils {
 

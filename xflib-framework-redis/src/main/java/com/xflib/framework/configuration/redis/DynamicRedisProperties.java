@@ -1,18 +1,20 @@
 /** Copyright (c) 2019 Koradji. */
-package com.xflib.framework.database;
+package com.xflib.framework.configuration.redis;
 
 import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import com.xflib.framework.redis.SiteRedisProperties;
+
 /**
  * @author koradji
  * @date 2019/1/27
  */
-@ConfigurationProperties(prefix = "custom.datasource")
-public class DynamicDataSourceProperties{
+@ConfigurationProperties(prefix = "custom.redis")
+public class DynamicRedisProperties{
     List<String> sites;
-    List<SiteDataSourceProperties> list; 
+    List<SiteRedisProperties> list; 
 
     public List<String> getSites() {
         return sites;
@@ -22,11 +24,11 @@ public class DynamicDataSourceProperties{
         this.sites = sites;
     }
 
-	public List<SiteDataSourceProperties> getList() {
+	public List<SiteRedisProperties> getList() {
         return list;
     }
 
-    public void setList(List<SiteDataSourceProperties> list) {
+    public void setList(List<SiteRedisProperties> list) {
         this.list = list;
     }
     

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import com.xflib.demo.amqp.Constants;
 import com.xflib.demo.amqp.Receiver;
 import com.xflib.demo.amqp.Sender;
-import com.xflib.framework.configuration.amqp.AbstractAmqpAdminConfiguration;
+import com.xflib.framework.amqp.AbstractAmqpAdminConfiguration;
 
 /**
  * @author koradji

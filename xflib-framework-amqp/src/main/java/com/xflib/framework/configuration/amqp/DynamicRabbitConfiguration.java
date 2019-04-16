@@ -23,7 +23,6 @@ import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
 import com.xflib.framework.amqp.DynamicRabbitConnectionFactory;
-import com.xflib.framework.amqp.DynamicRabbitProperties;
 
 /**
  * @author koradji

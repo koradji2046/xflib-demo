@@ -1,9 +1,11 @@
 /** Copyright (c) 2019 Koradji. */
-package com.xflib.framework.amqp;
+package com.xflib.framework.configuration.amqp;
 
 import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import com.xflib.framework.amqp.SiteRabbitProperties;
 
 /**
  * @author koradji

@@ -20,10 +20,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
-//import net.sf.json.JSONArray;
-//import net.sf.json.JSONObject;
-//import net.sf.json.JsonConfig;
-
 /**
  * JSON转换工具 <br>
  * <br>

@@ -1,0 +1,69 @@
+logging:
+  level:
+    org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer: info
+    org.apache.catalina.core.StandardService: info
+    #com.xflib.framework.configuration.redis: debug
+    #com.xflib.framework.redis: debug
+    com.xflib.framework.database: debug
+    root: error
+
+spring:
+  application:
+    name: test-dynamic-redis-service
+  datasource:
+      #url: jdbc:mysql://127.0.0.1:3306/dbdefault?characterEncoding=utf-8&useSSL=false
+      url: jdbc:mysql://127.0.0.1:3306/db30001?characterEncoding=utf-8&useSSL=false
+      username: root
+      password: fkR/CCI7T2Um
+      driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    #database: mysql   # MYSQL,ORACLE,SQL_SERVER,SYBASE,DEFAULT,B2,DERBY,H2,HSQL,INFORMIX,POSTGRESQL
+    #database-platform: org.hibernate.dialect.MySQL5Dialect
+    #generateDdl: false
+    properties:
+      hibernate:
+        cache.provider_class: org.hibernate.cache.NocacheProvider
+        #dialect: com.xflib.framework.basesuport.hibernate.MyOracleDialect
+        #default-schema: QZJH_USER_PT
+        format-sql: true
+        show-sql: true
+        hbm2ddl.auto: none
+      #naming:
+      #  physical-strategy:    org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      #  implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+
+custom:
+  datasource:
+    sites: default, 30001,30002,30003
+    list:
+      -
+        site: 30001
+        sources:
+          -
+            source: default
+            config:
+              url: jdbc:mysql://127.0.0.1:3306/db30001?characterEncoding=utf-8&useSSL=false
+              username: root
+              password: fkR/CCI7T2Um
+              driver-class-name: com.mysql.jdbc.Driver
+          -
+            source: slave
+            config:
+              url: jdbc:mysql://127.0.0.1:3306/db30001?characterEncoding=utf-8&useSSL=false
+              username: root
+              password: fkR/CCI7T2Um
+              driver-class-name: com.mysql.jdbc.Driver
+      -
+        site: 30002
+        sources:
+          -
+            source: default
+            config:
+              url: jdbc:mysql://127.0.0.1:3306/db30002?characterEncoding=utf-8&useSSL=false
+              username: root
+              password: fkR/CCI7T2Um
+              driver-class-name: com.mysql.jdbc.Driver
+
+# 测试类，禁止可靠删除或设置为false
+demo.enabled:
+  databaseCommandLineRunner: true

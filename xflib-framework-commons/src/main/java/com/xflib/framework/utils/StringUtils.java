@@ -21,7 +21,7 @@ import org.apache.commons.logging.LogFactory;
  * History:<br>
  * . v1.0.0.20170527, wangshi, Create<br>
  */
-public class StringUtils extends org.apache.commons.lang3.StringUtils {
+public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
 	protected static final Log log = LogFactory.getLog(StringUtils.class);
 
 	/**

@@ -12,7 +12,7 @@ import com.xflib.framework.utils.SpringUtils;
  * 
  */
 @Configuration
-public class ApplicationConfiguration {
+public class SpringUtilsConfiguration {
 
     @Bean
     public SpringUtils springUtils() {

@@ -1,4 +1,4 @@
-package com.xflib.framework.configuration.amqp;
+package com.xflib.framework.amqp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ import org.springframework.amqp.rabbit.connection.SimpleResourceHolder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xflib.framework.amqp.DynamicRabbitProperties;
+import com.xflib.framework.configuration.amqp.DynamicRabbitProperties;
 
 public abstract class AbstractAmqpAdminConfiguration {
 

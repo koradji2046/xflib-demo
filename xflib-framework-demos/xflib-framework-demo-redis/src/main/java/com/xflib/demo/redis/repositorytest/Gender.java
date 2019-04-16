@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xflib.framework.repositorytest;
+package com.xflib.demo.redis.repositorytest;
 
 /**
  * @author Christoph Strobl
