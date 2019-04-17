@@ -1,14 +1,17 @@
-
-feign¿ª·¢ËµÃ÷
+ï»¿feignå¼€å‘è¯´æ˜
 ================
 
-1 feign½Ó¿ÚÀàÒÔ¼°configurationÅäÖÃÀà²»ÒªÔÚcomponentËÑË÷Â·¾¶ÉÏ
-2 configurationÅäÖÃÀàÉÏ²»ÒªÊ¹ÓÃ@Configuration×¢½â
-3 ÔÚÆô¶¯ÀàÉÏÊ¹ÓÃÊ¹ÓÃ@EnableFeignClients(basePackages={"com.xflib.*.feign.sdk"})À´Ö¸¶¨feign½Ó¿ÚÀàµÄ×¨ÓÃËÑË÷Â·¾¶
-4 ²»×ñÑ­ÒÔÉÏ¹æÔò£¬¿ÉÄÜ»á³öÏÖ¸÷ÖÖ¸÷ÑùµÄÒì³££¡
-5 ²»ÊÊÓÃeurekaÊ±£¬@FeignClientÇëÊ¹ÓÃname»òvalueºÍurl²ÎÊı£¬¶ÔÓÚÏàÍ¬host¶øfeign½Ó¿ÚÀà²»Í¬µÄ½Ó¿Ú£¬½¨ÒéÊ¹ÓÃ²»Í¬µÄname»òvalue
+1 feignæ¥å£ç±»ä»¥åŠconfigurationé…ç½®ç±»ä¸è¦åœ¨componentæœç´¢è·¯å¾„ä¸Š
+2 configurationé…ç½®ç±»ä¸Šä¸è¦ä½¿ç”¨@Configurationæ³¨è§£
+3 åœ¨å¯åŠ¨ç±»ä¸Šä½¿ç”¨ä½¿ç”¨@EnableFeignClients(basePackages={"com.xflib.*.feign.sdk"})æ¥æŒ‡å®šfeignæ¥å£ç±»çš„ä¸“ç”¨æœç´¢è·¯å¾„
+4 ä¸éµå¾ªä»¥ä¸Šè§„åˆ™ï¼Œå¯èƒ½ä¼šå‡ºç°å„ç§å„æ ·çš„å¼‚å¸¸ï¼
+5 ä¸é€‚ç”¨eurekaæ—¶ï¼Œ@FeignClientè¯·ä½¿ç”¨nameæˆ–valueå’Œurlå‚æ•°ï¼Œå¯¹äºç›¸åŒhostè€Œfeignæ¥å£ç±»ä¸åŒçš„æ¥å£ï¼Œå»ºè®®ä½¿ç”¨ä¸åŒçš„nameæˆ–value
 
-°´ÕÕÉÏÊö¹æÔò£º
-1 Ã»ÓĞ³öÏÖRequestInterceptorÏà»¥¸²¸ÇµÄĞĞÎª¡£
-2 Ã»ÓĞ³öÏÖÂ·¾¶²»Ê¶±ğµÄĞĞÎª¡£
+æŒ‰ç…§ä¸Šè¿°è§„åˆ™ï¼š
+1 æ²¡æœ‰å‡ºç°RequestInterceptorç›¸äº’è¦†ç›–çš„è¡Œä¸ºã€‚
+2 æ²¡æœ‰å‡ºç°è·¯å¾„ä¸è¯†åˆ«çš„è¡Œä¸ºã€‚
 
+## èŒƒä¾‹å·¥ç¨‹ï¼š
+spring-boot-feign-customer
+spring-boot-feign-sdk
+spring-boot-feign-service

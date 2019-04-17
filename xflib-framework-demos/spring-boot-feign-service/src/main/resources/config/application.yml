@@ -1,0 +1,9 @@
+logging:
+  level:
+    org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer: info
+    org.apache.catalina.core.StandardService: info
+    root: error
+
+spring:
+  application:
+    name: test-feign-service
