@@ -52,3 +52,6 @@ public class SpringStudySelector implements ImportSelector, BeanFactoryAware {
 }
 
 ```
+
+## 范例工程
+spring-boot-feign-service
