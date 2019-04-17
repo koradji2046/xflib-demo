@@ -40,4 +40,11 @@ public class Startup {
 		return "Ok";
 	}
 	
+	@RequestMapping("/test2")
+	public String testTuling2() {
+		service.testService();
+		log.info("==>ok2");
+		return "Ok2";
+	}
+	
 }
