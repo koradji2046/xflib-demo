@@ -8,15 +8,18 @@
 > 具体设置参见《典型yml配置》
 
 ## 文件清单
-- /bootstrap/src/main/java/com/xflib/framework/configuration/redis/DynamicRedisConfiguration.java
-- /bootstrap/src/main/java/com/xflib/framework/redis/DynamicRedisConnectionFactory.java
-- /bootstrap/src/main/java/com/xflib/framework/redis/DynamicRedisHolder.java
-- /bootstrap/src/main/java/com/xflib/framework/redis/DynamicRedisProperties.java
-- /bootstrap/src/main/java/com/xflib/framework/redis/RedisPropertiesEx.java
+- /xflib-framework-redis/src/main/java/com/xflib/framework/configuration/redis/DynamicRedisConfiguration.java
+- /xflib-framework-redis/src/main/java/com/xflib/framework/configuration/DynamicRedisProperties.java
+- /xflib-framework-redis/src/main/java/com/xflib/framework/redis/DynamicRedisConnectionFactory.java
+- /xflib-framework-redis/src/main/java/com/xflib/framework/redis/DynamicRedisHolder.java
+- /xflib-framework-redis/src/main/java/com/xflib/framework/redis/SiteRedisProperties.java
+- /xflib-framework-redis/src/main/java/com/xflib/framework/redis/SiteSourceRedisProperties.java
+- /xflib-framework-redis/src/main/java/com/xflib/framework/redis/RedisBeanPostProcessor.java
+- /xflib-framework-redis/src/main/resources/META-INF/spring.factories
 
 ## 依赖文件
-- /bootstrap/src/main/java/com/xflib/framework/common/BaseException.java
-- /bootstrap/src/main/java/com/xflib/framework/utils/SpringUtils.java
+- /xflib-framework-redis/src/main/java/com/xflib/framework/common/BaseException.java
+- /xflib-framework-redis/src/main/java/com/xflib/framework/utils/SpringUtils.java
 
 ## 使用方法
 ### 1 注入RedisTemplate
@@ -33,7 +36,7 @@ public class MyFilter implements Filter
    }
 }
 ```
-，不指定时则使用默认值或当前线程最近指定的值),注意在chain.dofilter()之后执行DynamicRedisHolder.removeContext();
+不指定时则使用默认值或当前线程最近指定的值),注意在chain.dofilter()之后执行DynamicRedisHolder.removeContext();
 ```java
 DynamicRedisHolder.setSite("30001");  // 指定站点
 DynamicRedisHolder.setSource("xk");   // 指定数据源
@@ -74,17 +77,7 @@ redisTemplate.opsForValue().set("a", 1);
 DynamicRedisHolder.removeContext();
 ```
 ## 使用注意事项
-- 禁用RedisAutoConfiguration可获得較好的启动速度
-```java
-@SpringBootApplication
-@EnableAutoConfiguration(exclude = {RedisAutoConfiguration.class})
-public class Startup {
-    public static void main(String[] args) {
-        SpringApplication.run(Startup.class, args);
-    }
-}
-```
-- 暂不支持redisRepository
+- 未测试redisRepository
 
 # 典型yml配置
 ```

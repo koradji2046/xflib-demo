@@ -1,5 +1,5 @@
 /** Copyright (c) 2019 Koradji. */
-package com.xflib.demo.redis;
+package com.xflib.demo.redis.command;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,12 +11,12 @@ import com.xflib.framework.redis.DynamicRedisHolder;
  * @author koradji
  * @date 2019/1/27
  */
-public class SampleCommandLineRunner2 implements CommandLineRunner {
+public class RedisSampleCommandLineRunner2 implements CommandLineRunner {
 
     @Autowired
     private RedisTemplate<String, Object> redis;
 
-    public SampleCommandLineRunner2() {
+    public RedisSampleCommandLineRunner2() {
     }
 
     @Override

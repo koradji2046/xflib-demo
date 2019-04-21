@@ -61,5 +61,5 @@ custom:
 
 # 测试类，禁止可靠删除或设置为false
 demo.enabled:
-  sampleCommandLineRunner: true
-  sampleCommandLineRunner2: true
+  redisSampleCommandLineRunner: true
+  redisSampleCommandLineRunner2: true
