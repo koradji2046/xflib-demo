@@ -29,7 +29,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import com.xflib.framework.configuration.redis.DynamicRedisProperties;
+import com.xflib.framework.autoconfig.redis.DynamicRedisProperties;
 
 import redis.clients.jedis.JedisPoolConfig;
 
