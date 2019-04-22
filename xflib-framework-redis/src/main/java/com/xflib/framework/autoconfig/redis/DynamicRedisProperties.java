@@ -1,5 +1,5 @@
 /** Copyright (c) 2019 Koradji. */
-package com.xflib.framework.configuration.redis;
+package com.xflib.framework.autoconfig.redis;
 
 import java.util.List;
 

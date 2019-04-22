@@ -1,5 +1,5 @@
 /** Copyright (c) 2019 Koradji. */
-package com.xflib.framework.configuration.redis;
+package com.xflib.framework.autoconfig.redis;
 
 import java.net.UnknownHostException;
 
@@ -8,16 +8,10 @@ import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xflib.framework.redis.DynamicRedisConnectionFactory;
-import com.xflib.framework.redis.RedisBeanPostProcessor;
+import com.xflib.framework.redis.RedisTemplateBeanPostProcessor;
 
 /**
  * @author koradji
@@ -34,8 +28,8 @@ public class DynamicRedisConfiguration {
     }
     
     @Bean
-    public RedisBeanPostProcessor redisBeanPostProcessor(){
-    	return new RedisBeanPostProcessor(dynamicRedisConnectionFactory());
+    public RedisTemplateBeanPostProcessor redisBeanPostProcessor(){
+    	return new RedisTemplateBeanPostProcessor(dynamicRedisConnectionFactory());
     }
     
     @Bean("redisConnectionFactory")

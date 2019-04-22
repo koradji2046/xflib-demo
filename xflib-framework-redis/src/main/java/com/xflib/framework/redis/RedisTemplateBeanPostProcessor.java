@@ -16,11 +16,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 自定义的后置处理器
  * Created by smlz on 2019/4/3.
  */
-public class RedisBeanPostProcessor implements BeanPostProcessor{
+public class RedisTemplateBeanPostProcessor implements BeanPostProcessor{
 
 	private RedisConnectionFactory redisConnectionFactory;
 	
-	public RedisBeanPostProcessor(RedisConnectionFactory redisConnectionFactory){
+	public RedisTemplateBeanPostProcessor(RedisConnectionFactory redisConnectionFactory){
 		this.redisConnectionFactory=redisConnectionFactory;
 	}
 	
