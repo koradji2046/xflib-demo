@@ -1,4 +1,0 @@
-# Auto Configure
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.xflib.framework.configuration.database.DynamicDataSourceConfiguration,\
-com.xflib.framework.configuration.database.IdGeneratorConfiguration
