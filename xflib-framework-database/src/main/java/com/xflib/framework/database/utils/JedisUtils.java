@@ -1,14 +1,12 @@
 /**Copyright: Copyright (c) 2016, 湖南强智科技发展有限公司*/
-package com.xflib.framework.utils;
+package com.xflib.framework.database.utils;
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.stereotype.Component;
 
 /**
  * Jedis工具类<br>
@@ -18,24 +16,21 @@ import org.springframework.stereotype.Component;
  *    . v主版本号.次版本号.分支版本.20180518, com.qzdatasoft.jianli, Fixed|Added|Deprecated: describe<br>
  *    . v主版本号.次版本号.分支版本.20180518, com.qzdatasoft.jianli, Create<br>
  */
-@Component
-@Configurable
 @Deprecated
-public class JedisUtil implements ApplicationContextAware {
+public class JedisUtils implements ApplicationContextAware {
 	
-	private static final int ArrayList = 0;
+//	private static final int ArrayList = 0;
 	private static ApplicationContext applicationContext = null;
 
-	public JedisUtil(){}
-	
 	@Override
 	public void setApplicationContext(ApplicationContext context)throws BeansException{
-		if(JedisUtil.applicationContext == null){
-			JedisUtil.applicationContext = context;
+		if(JedisUtils.applicationContext == null){
+			JedisUtils.applicationContext = context;
 		}
 	}
 	
-	public static <T>DefaultRedisScript redisScript2(Class<T> type, String script){
+	@SuppressWarnings("rawtypes")
+	public <T>DefaultRedisScript redisScript2(Class<T> type, String script){
 		DefaultRedisScript<T> redisScript=new DefaultRedisScript<>();
 		redisScript.setScriptText(script);
 		redisScript.setResultType(type);
@@ -44,7 +39,7 @@ public class JedisUtil implements ApplicationContextAware {
 
 	@SuppressWarnings("rawtypes")
 	public static RedisTemplate redisTemplate(){
-		RedisTemplate redisTemplate=applicationContext.getBean("redisTemplate",RedisTemplate.class);
+		RedisTemplate redisTemplate=(RedisTemplate) applicationContext.getBean("jsonRedisTemplate"/*,RedisTemplate.class*/);
 		return redisTemplate;
 	}
 	
@@ -54,6 +49,7 @@ public class JedisUtil implements ApplicationContextAware {
 	 * @param key  缓存key值
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public static boolean exists(String key,String hashKey){
 		HashOperations<String,String,Long> ops = redisTemplate().opsForHash();
 		return ops.hasKey(key, hashKey);

@@ -29,7 +29,8 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import com.xflib.framework.autoconfig.redis.DynamicRedisProperties;
+import com.xflib.framework.redis.configure.DynamicRedisProperties;
+import com.xflib.framework.redis.utils.DynamicRedisHolder;
 
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -37,9 +38,9 @@ import redis.clients.jedis.JedisPoolConfig;
  * @author koradji
  * @date 2019/1/27
  */
-public class DynamicRedisConnectionFactory implements RedisConnectionFactory {
+public class DynamicJedisConnectionFactory implements RedisConnectionFactory {
 
-    private Logger log = LoggerFactory.getLogger(DynamicRedisConnectionFactory.class);
+    private Logger log = LoggerFactory.getLogger(DynamicJedisConnectionFactory.class);
     private Map<String,RedisConnectionFactory> jedisConnectionFactorys= new HashMap<>();
 
     @Autowired
@@ -49,7 +50,7 @@ public class DynamicRedisConnectionFactory implements RedisConnectionFactory {
     private RedisProperties defaultRedisProperties;
 
     @PostConstruct
-    public void createRedisConnectionFactory() throws UnknownHostException {
+    public void createJedisConnectionFactory() throws UnknownHostException {
         dynamicRedisProperties.getList().forEach((siteRedisProperties)->{//创建站点指定redis数据源
           String site=siteRedisProperties.getSite();
           siteRedisProperties.getSources().forEach((siteSourceRedisPrperties)->{
@@ -120,7 +121,6 @@ public class DynamicRedisConnectionFactory implements RedisConnectionFactory {
         RedisConnectionFactory jedisConnectionFactory=
                 (new MetaJedisConnectionFactory())
                 .createRedisConnectionFactory(config);
-//        String beanName=String.format("redis-%s-%s", site,source);
         jedisConnectionFactorys.put(beanName, jedisConnectionFactory);
         if(log.isDebugEnabled()){
             log.debug("=> Redis datasource [{}] has registed.",beanName);

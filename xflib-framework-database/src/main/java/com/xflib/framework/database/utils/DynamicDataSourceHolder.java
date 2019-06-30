@@ -1,5 +1,5 @@
 /** Copyright (c) 2019 Koradji. */
-package com.xflib.framework.database;
+package com.xflib.framework.database.utils;
 
 /**
  * @author koradji
@@ -10,6 +10,8 @@ public abstract class DynamicDataSourceHolder {
     private static InheritableThreadLocal<String> siteContextHolder = 
             new InheritableThreadLocal<String>(); 
     private static InheritableThreadLocal<String> sourceContextHolder = 
+            new InheritableThreadLocal<String>(); 
+    private static InheritableThreadLocal<String> idPrefixContextHolder = 
             new InheritableThreadLocal<String>(); 
 
     public static void setSite(String site) {
@@ -63,4 +65,12 @@ public abstract class DynamicDataSourceHolder {
         siteContextHolder.remove();
     }
 
+    public static void setPrefix(String idPrefix) {
+        idPrefixContextHolder.set(idPrefix);
+    }
+
+    public static String getPrefix() {
+        String site = idPrefixContextHolder.get();
+        return (site == null || site.isEmpty()) ? "default" : site;
+    }
 }

@@ -1,5 +1,5 @@
 /** Copyright (c) 2019 Koradji. */
-package com.xflib.framework.configuration.database;
+package com.xflib.framework.database.configure;
 
 import java.util.List;
 

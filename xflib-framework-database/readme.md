@@ -1,5 +1,16 @@
 # 租用模式下Redis多站点多数据源切换模块-使用说明
 
+jpa:
+  hibernate:
+    ddl-auto: create
+
+ddl-auto:create----每次运行该程序，没有表格会新建表格，表内有数据会清空
+ddl-auto:create-drop----每次程序结束的时候会清空表
+ddl-auto:update----每次运行程序，没有表格会新建表格，表内有数据不会清空，只会更新
+ddl-auto:validate----运行程序会校验数据与数据库的字段类型是否相同，不同会报错
+
+
+
 > 在云化应用中，每个租户需要使用自己独立的redis数据源，而且可能每个租户的某个应用需要使用多个热地税数据源，本模块为解决这个问题而诞生。
 > 在yml中指定站点代码custom.redis.sites, 这是一个字符串数组
 > 在yml中通过custom.redis.list[].site为每个站点定义数据源，在程序中通过DynamicRedisHolder.setSite(String)切换站点

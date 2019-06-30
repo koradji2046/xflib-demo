@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Stack;
 
 import org.hibernate.LockMode;
 import org.hibernate.LockOptions;
@@ -34,12 +35,12 @@ import org.hibernate.jdbc.AbstractReturningWork;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
 import org.jboss.logging.Logger;
+import org.springframework.util.StringUtils;
 
-import com.xflib.framework.common.BaseException;
-import com.xflib.framework.configuration.database.IdGeneratorProperties;
-import com.xflib.framework.utils.DateTimeUtils;
-import com.xflib.framework.utils.JedisUtil;
-import com.xflib.framework.utils.StringUtils;
+import com.xflib.framework.database.configure.IdGeneratorProperties;
+import com.xflib.framework.database.utils.DateTimeUtils;
+import com.xflib.framework.database.utils.DynamicDataSourceHolder;
+import com.xflib.framework.database.utils.JedisUtils;
 
 /**
  *  IdGenerator数据库唯一ID生成器
@@ -82,13 +83,10 @@ public class IdGenerator extends TableGenerator {
 		/** 直到最大 */		MAX,
 	}
 
-	private static final CoreMessageLogger LOG = Logger.getMessageLogger(CoreMessageLogger.class,
-			IdGenerator.class.getName());
+	private static final CoreMessageLogger LOG = Logger.getMessageLogger(CoreMessageLogger.class,	IdGenerator.class.getName());
 	private static final String LAST_TIME_COLUMN_PARAM = "lastTime_column_name";
 	private static final String LAST_TIME_COLUMN_DEFAULT = "last_time";
-	
 	private static final String IDGENERATOR_CACHE_KEY="IdGenerator";
-	
 	private String lastTimeColumnName;
 	private RecycleType recycleType;
 	private Date currentDate;
@@ -117,6 +115,30 @@ public class IdGenerator extends TableGenerator {
 			field.set(this, value);  
 		}catch(Exception e){}
 	}
+	//id流水号更新周期
+	private String getIdIndexUpdCycle(){
+		return IdGeneratorProperties.getInstance().getIdIndexUpdCycle();
+	}
+	//ID前缀
+	private String getIdPrefix(){
+		return DynamicDataSourceHolder.getPrefix();
+	}
+	//租户站点
+	private String getSite(){
+		return DynamicDataSourceHolder.getSite();
+	}
+	//数据库时间函数
+	private String getCurrentDateTime(){
+		String current_date="current_date";
+		// TODO: 判断数据库类型并获取
+		return current_date;
+	}
+	
+//	private String getSysName(){
+//		return IdGeneratorProperties.getInstance().getSysName();
+////		return CommonContext.getSysName();
+//	}
+	
 	
 	@Override
 	public void configure(Type type, Properties params, ServiceRegistry serviceRegistry) throws MappingException {
@@ -130,25 +152,12 @@ public class IdGenerator extends TableGenerator {
 		super.configure(type, params, serviceRegistry);
 	}
 	
-	//id流水号更新周期
-	private String getIdIndexUpdCycle(){
-		return IdGeneratorProperties.getInstance().getIdIndexUpdCycle();
-//		return CommonContext.getIdIndexUpdCycle();
-	}
-	private String getIdPrefix(){
-		return IdGeneratorHolder.getPrefix();
-	}
-	private String getSysName(){
-		return IdGeneratorProperties.getInstance().getSysName();
-//		return CommonContext.getSysName();
-	}
-	
 	@Override
 	public synchronized Serializable generate(final SessionImplementor session, final Object obj) {
 		
 		//获取ID的更新周期
 		String idIdxUpdCycle = getIdIndexUpdCycle();
-		idIdxUpdCycle = StringUtils.isBlank(idIdxUpdCycle)?"2000":idIdxUpdCycle;
+		idIdxUpdCycle = StringUtils.isEmpty(idIdxUpdCycle)?"2000":idIdxUpdCycle;
 		
 		//缓存Jedis对象
 	//	Jedis jedis = JedisUtil.getJedis();
@@ -157,19 +166,19 @@ public class IdGenerator extends TableGenerator {
 		String xStr = _generate(session,obj,Long.parseLong(idIdxUpdCycle)).toString();
 		
 		String sysName = "";
-		try {
+//		try {
 			sysName = getIdPrefix();
-		} catch (BaseException e) {
-			e.printStackTrace();
-		}
-		if(StringUtils.isBlank(sysName)){
-			sysName = getSysName();
-		}
+//		} catch (BaseException e) {
+//			e.printStackTrace();
+//		}
+//		if(StringUtils.isBlank(sysName)){
+//			sysName = getSysName();
+//		}
 		
 		String cDate = getCycleDateStr(currentDate);
 		String hexDate = Integer.toHexString(Integer.parseInt(cDate));
 		
-		String strId = sysName + hexDate + StringUtils.numToStringOnChar62(Integer.parseInt(xStr));	
+		String strId = sysName + hexDate + this.numToStringOnChar62(Integer.parseInt(xStr));	
 		return strId;	
 	}
 	
@@ -198,6 +207,7 @@ public class IdGenerator extends TableGenerator {
 										boolean isCache = false;		
 										try {
 											selectPS.setString(1, getSegmentValue() );
+											selectPS.setString(2, getSite() );
 											final ResultSet selectRS = executeQuery( selectPS, statsCollector );
 											if(!selectRS.next()){
 												oldValue = (long)getInitialValue();	
@@ -207,6 +217,7 @@ public class IdGenerator extends TableGenerator {
 												try {
 													insertPS.setString( 1, getSegmentValue() );
 													value.bind(insertPS, 2 );
+													insertPS.setString(3, getSite());
 													executeUpdate(insertPS, statsCollector );
 												}finally {
 													insertPS.close();
@@ -216,10 +227,10 @@ public class IdGenerator extends TableGenerator {
 												String cacheKey = getSegmentValue().toUpperCase()+"_"+cycleDataStr;
 												
 												//当前缓存是否存在（必须在初始化之前，因为下面还需这个值进行判断）
-												isCache = JedisUtil.exists(IDGENERATOR_CACHE_KEY,cacheKey);
+												isCache = JedisUtils.exists(IDGENERATOR_CACHE_KEY,cacheKey);
 												
 												//数据库没有数据的情况，初始缓存
-												JedisUtil.set(IDGENERATOR_CACHE_KEY, cacheKey, 1L);
+												JedisUtils.set(IDGENERATOR_CACHE_KEY, cacheKey, 1L);
 												
 												isUpdData = true;	//需更新数据库
 												
@@ -234,14 +245,14 @@ public class IdGenerator extends TableGenerator {
 												String cacheKey = getSegmentValue().toUpperCase()+"_"+cycleDataStr;
 												
 												//当前缓存是否存在
-												isCache = JedisUtil.exists(IDGENERATOR_CACHE_KEY,cacheKey);
+												isCache = JedisUtils.exists(IDGENERATOR_CACHE_KEY,cacheKey);
 												
 												//判断缓存是否存在，如果缓存不存在则有可能缓存误删了，则需重新初始化缓存，缓存(流水号)直接加ID数值的更新周期（因为一个周期才能更新一次数据库）,形成新的id序列数值
 												if(!isCache){
 													x = x + updIdx;
 													isUpdData = true;	//需更新数据库，同步最新流水号
 													value.initialize(x);
-													JedisUtil.set(IDGENERATOR_CACHE_KEY,cacheKey,x);	//初始化缓存
+													JedisUtils.set(IDGENERATOR_CACHE_KEY,cacheKey,x);	//初始化缓存
 												}
 											}
 											selectRS.close();
@@ -257,7 +268,7 @@ public class IdGenerator extends TableGenerator {
 											String cycleDataStr = getCycleDateStr(currentDate);
 											String cacheKey = getSegmentValue().toUpperCase()+"_"+cycleDataStr;
 											
-											Long nubIdx = JedisUtil.incr(IDGENERATOR_CACHE_KEY,cacheKey);	//流水号增1
+											Long nubIdx = JedisUtils.incr(IDGENERATOR_CACHE_KEY,cacheKey);	//流水号增1
 											value.initialize(nubIdx);
 											
 											if(nubIdx%updIdx==0){	//达到周期更新数据库
@@ -282,6 +293,7 @@ public class IdGenerator extends TableGenerator {
 												//value.bind(updatePS, 2);
 												updatePS.setLong(2, oldValue);
 												updatePS.setString(3, getSegmentValue());
+												updatePS.setString(4, getSite());
 												rows = executeUpdate(updatePS, statsCollector);
 												
 												
@@ -303,7 +315,6 @@ public class IdGenerator extends TableGenerator {
 								}
 
 								// 验证流水号，根据周期设置决定使用当前值还是归0;
-								// TODO: 还需要处理数字表示不够的情形，将数字进行进制转换---10进制转换为62进制(10个数字字符+52个大小写字母)
 								@SuppressWarnings("deprecation")
 								private Long validValue(Date lastModifydate,Date curentDate, long value) {
 									long result = (long) getInitialValue();
@@ -362,8 +373,7 @@ public class IdGenerator extends TableGenerator {
 			}
 		);
 	}
-	
-	
+
 	/**
 	 * 获取当前周期的标识 <br>
 	 * 
@@ -403,13 +413,12 @@ public class IdGenerator extends TableGenerator {
 		return result;
 	}
 	
-	
 	@Override
 	protected String buildSelectQuery(Dialect dialect) {
 		final String alias = "tbl";
 		final String query = "select " + StringHelper.qualify(alias, this.getValueColumnName()) + ", "
-				+ StringHelper.qualify(alias, lastTimeColumnName) + ", current_date" + " from " + this.getTableName() + ' '
-				+ alias + " where " + StringHelper.qualify(alias, this.getSegmentColumnName()) + "=?";
+				+ StringHelper.qualify(alias, lastTimeColumnName) + ","+this.getCurrentDateTime() + " from " + this.getTableName() + ' '
+				+ alias + " where " + StringHelper.qualify(alias, this.getSegmentColumnName()) + "=? and site=?";
 		final LockOptions lockOptions = new LockOptions(LockMode.PESSIMISTIC_WRITE);
 		lockOptions.setAliasSpecificLockMode(alias, LockMode.PESSIMISTIC_WRITE);
 		final Map<String, String[]> updateTargetColumnsMap = Collections.singletonMap(alias,new String[]{this.getValueColumnName()});
@@ -418,14 +427,14 @@ public class IdGenerator extends TableGenerator {
 
 	@Override
 	protected String buildUpdateQuery() {
-		return "update " + this.getTableName() + " set " + this.getValueColumnName() + "=? , " + lastTimeColumnName + "=current_date"
-				+ " where " +  this.getValueColumnName() + "=? and " +  this.getSegmentColumnName() + "=?";
+		return "update " + this.getTableName() + " set " + this.getValueColumnName() + "=? , " + lastTimeColumnName + "="+ this.getCurrentDateTime() 
+				+ " where " +  this.getValueColumnName() + "=? and " +  this.getSegmentColumnName() + "=? and site=?";
 	}
 
 	@Override
 	protected String buildInsertQuery() {
 		return "insert into " +  this.getTableName() + " (" + lastTimeColumnName + ", " +  this.getSegmentColumnName() + ", "
-				+  this.getValueColumnName() + ") " + " values (current_date,?,?)";
+				+  this.getValueColumnName() +", site" + ") " + " values ("+this.getCurrentDateTime()+",?,?,?)";
 	}
 
 	private PreparedStatement prepareStatement(
@@ -460,4 +469,30 @@ public class IdGenerator extends TableGenerator {
 			statsCollector.jdbcExecuteStatementEnd();
 		}
 	}
+
+	private static final char[] array = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
+	
+	/**
+	 * 对数字进行62进制转换
+	 * 
+	 * @param number	数据
+	 * @return	str
+	 */
+	private String numToStringOnChar62(Integer number){
+		Integer rest = number;
+		Stack<Character> stack = new Stack<Character>();
+		StringBuilder result = new StringBuilder();
+		while(rest!=0){
+			stack.add(array[new Integer((rest-(rest/62)*62)).intValue()]);
+			rest = rest/62;
+		}
+		for(;!stack.isEmpty();){
+			result.append(stack.pop());
+		}
+		
+		String newChar = org.apache.commons.lang3.StringUtils.leftPad(result.toString(), 6, '0');
+		
+		return newChar;
+	} 
+
 }

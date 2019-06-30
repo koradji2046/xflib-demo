@@ -4,62 +4,70 @@ package com.xflib.framework.database;
 import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.aop.support.AopUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
-import com.xflib.framework.common.BaseException;
 import com.xflib.framework.database.annotation.DataSource;
+import com.xflib.framework.database.utils.DynamicDataSourceHolder;
 
 //import lombok.extern.slf4j.Slf4j;
 
 /**
- * 为Transaction设置数据源<br>
- * <br>
+ * 依据@DataSource为Transaction重设数据源
+ * 忽略了类上的DataSource，而只检测类方法上的DataSource和接口类及方法上的@DataSource
+ * 
  * History:<br> 
  *    . v1.0.0.20180120, Koradji, Fixed: 将事务结束后清除数据员改为回复原数据源<br>
  *    . v1.0.0.20161106, Koradji, Create<br>
  */
-//@Component
 @SuppressWarnings("serial")
 public class DynamicDatasourceTransactionInterceptor extends TransactionInterceptor {
 
+	@Autowired
+	DataSource dataSource;
+	
 	@SuppressWarnings("deprecation")
     @Override
 	public Object invoke(final MethodInvocation invocation) throws Throwable {
         long ltime = System.currentTimeMillis();
-//		String re="default"; 
 		String re="master"; 
-        Object target = invocation.getThis();
-//        String xxx=DynamicDataSourceHolder.getDataSourceKey();
+//        Object target = invocation.getThis();
+		Class<?> target = (invocation.getThis() != null ? AopUtils.getTargetClass(invocation.getThis()) : null);
         Method m=invocation.getMethod();
     	if(m.isAnnotationPresent(DataSource.class)) {
-        	// 如果方法上定义了@DynamicDataSource
+    		// 如果方法上定义了@DataSource
             DataSource data = m.getAnnotation(DataSource.class);
             re=data.value();
-    	}else{        
+    	}else{
+    		// 检查接口是否定义了@DataSource
 	        String method = invocation.getMethod().getName();
 	
 	        Class<?>[] classz = target.getClass().getInterfaces();
 	        Class<?>[] parameterTypes = invocation.getMethod().getParameterTypes();
-			
-		    try {
-	            m = classz[0].getMethod(method, parameterTypes);
-		        if (method != null){
-		        	if(m.isAnnotationPresent(DataSource.class)) {
-			        	// 如果方法上定义了@DynamicDataSource
-			            DataSource data = m.getAnnotation(DataSource.class);
-			            re=data.value();
-			        } else  {
-				        if (classz[0] != null && classz[0].isAnnotationPresent(DataSource.class)) {
-				        	// 如果类定义了@DynamicDataSource
-				            DataSource data = classz[0].getAnnotation(DataSource.class);
+		
+	        int index=0;
+	        while("master".equals(re) && classz.length>index){
+			    try {
+		            m = classz[index].getMethod(method, parameterTypes);
+			        if (method != null){
+			        	if(m.isAnnotationPresent(DataSource.class)) {
+				        	// 如果接口方法上定义了@DataSource
+				            DataSource data = m.getAnnotation(DataSource.class);
 				            re=data.value();
-				        }
-				    }
-		        }
-		    } catch (Exception e) {
-		    	 /*logger.error(String.format(" An error has occurred at %s when get dynamic dataSource:%s", 
-			        		StackTraceUtils.getMethodFullName(), System.getProperty("line.separator"), e.toString()));*/
-		    }
+				        } else  {
+					        if (classz[index] != null && classz[index].isAnnotationPresent(DataSource.class)) {
+					        	// 如果接口类定义了@DataSource
+					            DataSource data = classz[index].getAnnotation(DataSource.class);
+					            re=data.value();
+					        }
+					    }
+			        }
+			    } catch (Exception e) {
+			    	 /*logger.error(String.format(" An error has occurred at %s when get dynamic dataSource:%s", 
+				        		StackTraceUtils.getMethodFullName(), System.getProperty("line.separator"), e.toString()));*/
+			    }
+	        }
     	}
     	
     	String oldDs=DynamicDataSourceHolder.getDataSourceKey(); 
@@ -72,10 +80,7 @@ public class DynamicDatasourceTransactionInterceptor extends TransactionIntercep
 	    try{
 	    	rt=super.invoke(invocation);
 	        execTime1 = System.currentTimeMillis() - ltime1;
-	    }catch(BaseException e){
-	    	throw e;
 	    }catch(Exception e){
-	    	e.printStackTrace();
 	    	throw new Throwable();
 	    }finally {
 	    	DynamicDataSourceHolder.setDataSourceKey(oldDs);
