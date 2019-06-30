@@ -3,9 +3,9 @@ package com.xflib.demo.redis.command;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.data.redis.core.RedisTemplate;
 
-import com.xflib.framework.redis.DynamicRedisHolder;
+import com.xflib.framework.redis.JsonRedisTemplate;
+import com.xflib.framework.redis.utils.DynamicRedisHolder;
 
 /**
  * @author koradji
@@ -14,7 +14,7 @@ import com.xflib.framework.redis.DynamicRedisHolder;
 public class RedisSampleCommandLineRunner2 implements CommandLineRunner {
 
     @Autowired
-    private RedisTemplate<String, Object> redis;
+    private JsonRedisTemplate redis;
 
     public RedisSampleCommandLineRunner2() {
     }
@@ -32,8 +32,6 @@ public class RedisSampleCommandLineRunner2 implements CommandLineRunner {
     }
 
     private void _run(String site, String source) {
-//        DynamicRedisHolder.setSite(site);
-//        DynamicRedisHolder.setSource(source);
         DynamicRedisHolder.setContext(site, source);
         
         redis.opsForValue().set("a", 1);

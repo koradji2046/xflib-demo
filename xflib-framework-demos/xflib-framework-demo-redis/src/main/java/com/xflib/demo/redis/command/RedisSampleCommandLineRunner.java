@@ -2,9 +2,9 @@
 package com.xflib.demo.redis.command;
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.data.redis.core.RedisTemplate;
 
-import com.xflib.framework.redis.DynamicRedisHolder;
+import com.xflib.framework.redis.JsonRedisTemplate;
+import com.xflib.framework.redis.utils.DynamicRedisHolder;
 
 /**
  * @author koradji
@@ -12,7 +12,8 @@ import com.xflib.framework.redis.DynamicRedisHolder;
  */
 public class RedisSampleCommandLineRunner implements CommandLineRunner {
 
-    private RedisTemplate<String, Object> redis;
+//	@Autowired
+    private JsonRedisTemplate redis;
     
     public RedisSampleCommandLineRunner(){
     }
@@ -22,19 +23,19 @@ public class RedisSampleCommandLineRunner implements CommandLineRunner {
         
         System.out.println("=> 测试类, 将直接打印输出到屏幕:");
 
-        redis=DynamicRedisHolder.getRedisTemplateBySite("default");
+        redis=DynamicRedisHolder.getRedisTemplateBySite(JsonRedisTemplate.class,"default");
         redis.opsForValue().set("a", 1);
         redis.opsForValue().set("b", "abc");
         System.out.println(redis.opsForValue().get("a"));
         System.out.println(redis.opsForValue().get("b"));
     
-        redis=DynamicRedisHolder.getRedisTemplate("30001","xk");
+        redis=DynamicRedisHolder.getRedisTemplate(JsonRedisTemplate.class,"30001","xk");
         redis.opsForValue().set("a", 1);
         redis.opsForValue().set("b", "abc");
         System.out.println(redis.opsForValue().get("a"));
         System.out.println(redis.opsForValue().get("b"));
 
-        redis=DynamicRedisHolder.getRedisTemplateBySite("30002");
+        redis=DynamicRedisHolder.getRedisTemplateBySite(JsonRedisTemplate.class,"30002");
         redis.opsForValue().set("a", 1);
         redis.opsForValue().set("b", "abc");
         System.out.println(redis.opsForValue().get("a"));
