@@ -1,10 +1,12 @@
 /** Copyright (c) 2019 Koradji. */
-package com.xflib.framework.redis.configure;
+package com.xflib.framework.redis.jedis.configure;
 
 import java.net.UnknownHostException;
 
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -12,9 +14,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisOperations;
 
-import com.xflib.framework.redis.DynamicJedisConnectionFactory;
 import com.xflib.framework.redis.JsonRedisTemplate;
-import com.xflib.framework.redis.utils.DynamicRedisHolder;
+import com.xflib.framework.redis.jedis.DynamicJedisConnectionFactory;
+import com.xflib.framework.redis.jedis.utils.DynamicRedisHolder;
 
 import redis.clients.jedis.Jedis;
 
@@ -24,18 +26,14 @@ import redis.clients.jedis.Jedis;
  * 
  */
 @Configuration
+@AutoConfigureBefore(RedisAutoConfiguration.class)
 @EnableConfigurationProperties({ DynamicRedisProperties.class,RedisProperties.class })
-public class DynamicRedisConfiguration {
-
-    public DynamicRedisConfiguration(
-            RedisProperties properties,
-            DynamicRedisProperties dynamicProperties){
-    }
-    
-    @Bean
-    public DynamicRedisHolder dynamicRedisHolder(){
-    	return new DynamicRedisHolder();
-    }
+public class DynamicRedisAutoConfiguration {
+//
+//    public DynamicRedisConfiguration(
+//            RedisProperties properties,
+//            DynamicRedisProperties dynamicProperties){
+//    }
     
     @Bean("redisConnectionFactory")
     @ConditionalOnMissingBean(name = "redisConnectionFactory")
@@ -43,15 +41,4 @@ public class DynamicRedisConfiguration {
     public DynamicJedisConnectionFactory dynamicJedisConnectionFactory() {
         return new DynamicJedisConnectionFactory();
     }
-
-    @Bean
-    @ConditionalOnMissingBean(JsonRedisTemplate.class)
-    public JsonRedisTemplate jsonRedisTemplate(
-    		RedisConnectionFactory redisConnectionFactory) 
-    				throws UnknownHostException {
-		JsonRedisTemplate template = new JsonRedisTemplate();
-		template.setConnectionFactory(redisConnectionFactory);
-		return template;
-    }
-	
 }

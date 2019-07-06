@@ -1,5 +1,5 @@
 /** Copyright (c) 2019 Koradji. */
-package com.xflib.framework.redis;
+package com.xflib.framework.redis.jedis;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,8 +29,8 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import com.xflib.framework.redis.configure.DynamicRedisProperties;
-import com.xflib.framework.redis.utils.DynamicRedisHolder;
+import com.xflib.framework.redis.jedis.configure.DynamicRedisProperties;
+import com.xflib.framework.redis.jedis.utils.DynamicRedisHolder;
 
 import redis.clients.jedis.JedisPoolConfig;
 

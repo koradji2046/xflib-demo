@@ -21,8 +21,13 @@
 
 ## 使用方法
 ### 1 启用DynamicRedis
-使用注解@DynamicRedis启用DynamicRedis
-
+使用注解@EnabledRedis启用DynamicRedis, 有两个参数
+```
+public @interface EnableRedis {
+	RedisDriver driver() default RedisDriver.JEDIS;     //  支持的数据类型jedis|redission
+	boolean isDynamic() default false;     //是否支持动态数据源
+}
+```
 ### 2 注入JsonRedisTemplate(StringRedisTemplate/RedisTemplate)
 在使用JsonRedisTemplate之前指定站点和数据源，一般在filter中指定，例如：
 ```java

@@ -9,13 +9,24 @@ import java.lang.annotation.Target;
 
 import org.springframework.context.annotation.Import;
 
-import com.xflib.framework.redis.configure.DynamicRedisConfiguration;
+import com.xflib.framework.redis.RedisDriver;
+import com.xflib.framework.redis.RedisImportSelector;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Import(DynamicRedisConfiguration.class)
-public @interface EnabledDynamicRedis {
-//	String[] value() default "Jedis";     // 占位，未来支持Redisson
+@Import(RedisImportSelector.class)
+public @interface EnableRedis {
+	/**
+	 * REDIS引擎类型
+	 * @return
+	 */
+	RedisDriver driver() default RedisDriver.JEDIS;
+	
+	/**
+	 * 是否支持动态数据源
+	 * @return
+	 */
+	boolean isDynamic() default false;
 }

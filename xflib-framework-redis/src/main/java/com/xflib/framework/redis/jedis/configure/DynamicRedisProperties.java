@@ -1,11 +1,11 @@
 /** Copyright (c) 2019 Koradji. */
-package com.xflib.framework.redis.configure;
+package com.xflib.framework.redis.jedis.configure;
 
 import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import com.xflib.framework.redis.SiteRedisProperties;
+import com.xflib.framework.redis.jedis.SiteRedisProperties;
 
 /**
  * @author koradji

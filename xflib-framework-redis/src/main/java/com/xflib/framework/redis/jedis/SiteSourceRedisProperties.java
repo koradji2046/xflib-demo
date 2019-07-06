@@ -1,5 +1,5 @@
 /** Copyright (c) 2019 Koradji. */
-package com.xflib.framework.redis;
+package com.xflib.framework.redis.jedis;
 
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 
