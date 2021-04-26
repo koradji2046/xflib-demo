@@ -22,7 +22,7 @@
 
 		<commons-lang3.version>3.4</commons-lang3.version>
 		<commons-beanutils.version>1.9.3</commons-beanutils.version>
-		<commons-io.version>2.2</commons-io.version>
+		<commons-io.version>2.7</commons-io.version>
 		<hibernate.version>5.1.2.Final</hibernate.version>
 		<druid.version>1.1.13</druid.version>
 		<xflib-framework-commons.version>1.0.0-SNAPSHOT</xflib-framework-commons.version>
